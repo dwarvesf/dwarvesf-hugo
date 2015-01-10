@@ -1,0 +1,46 @@
+---
+
+baseurl:            http://blog.dwarvesf.me/
+pygmentsuseclasses: true 
+theme:              hugo-incorporated
+
+params:
+  inc:
+    # Blog Information
+    title:        "Dwarves Foundation"
+    subtitle:     "We are Dwarves. We love #gopher"
+    cover_image:  cover.png
+    logo:         logo.png
+
+    # Company information
+    company:      Dwarves Foundation
+    url:          http://dwarvesf.me
+    facebook:     dwarvesf
+    github:       dwarvesf
+    twitter:      dwarvesf
+#    gplus:        ''
+    about_link:   http://dwarvesf.me/
+
+    # Product Information
+#    product_link: http://nilproductions.com/
+#    tagline:      "Coming up nil for quite some time."
+
+    # Comments
+    disqus:
+      shortname:  dwarvesf
+
+    # Sharing settings
+    sharing:
+      twitter:    true
+      facebook:   true
+      gplus:      false
+      hn:         true
+
+    analytics:
+      google: false # Add tracking code in _includes/_google-analytics.html
+      # piwik:
+      #   domain: piwik.imperialwicket.com
+      #   siteid: 2
+
+    google_font: 'Droid+Sans:300,600'
+    # Setup your fonts, colors etc at _assets/stylesheets/main.scss
