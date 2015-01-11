@@ -1,6 +1,6 @@
 ---
 
-baseurl:            http://blog.dwarvesf.me/
+baseurl:            http://blog.dwarvesf.com/
 pygmentsuseclasses: true 
 theme:              hugo-incorporated
 
@@ -14,12 +14,12 @@ params:
 
     # Company information
     company:      Dwarves Foundation
-    url:          http://dwarvesf.me
+    url:          http://dwarvesf.com/
     facebook:     dwarvesf
     github:       dwarvesf
     twitter:      dwarvesf
 #    gplus:        ''
-    about_link:   http://dwarvesf.me/
+    about_link:   http://dwarvesf.com/
 
     # Product Information
 #    product_link: http://nilproductions.com/

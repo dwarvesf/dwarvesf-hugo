@@ -1,2 +1,2 @@
 # dwarvesf-hugo
-Contents for dwarvesf.me
+Contents for dwarvesf.com
