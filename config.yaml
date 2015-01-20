@@ -14,7 +14,7 @@ params:
 
     # Company information
     company:      Dwarves Foundation
-    url:          http://dwarvesf.com/
+    url:          http://blog.dwarvesf.com/
     facebook:     dwarvesf
     github:       dwarvesf
     twitter:      dwarvesf
@@ -42,5 +42,5 @@ params:
       #   domain: piwik.imperialwicket.com
       #   siteid: 2
 
-    google_font: 'Droid+Sans:300,600'
+    google_font: 'Droid+Sans:400,700'
     # Setup your fonts, colors etc at _assets/stylesheets/main.scss
