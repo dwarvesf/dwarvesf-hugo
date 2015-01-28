@@ -19,7 +19,7 @@ authorimage: gancho.png
 
 ---
 
-We are a team in Vietnam. We are young and eager to learn. We have passion and experience in making cool products, esp. cloud and mobile apps. We want to help people solve their problems by using our solutions.
+We are a team in Saigon, Vietnam. We are young and eager to learn. We have passion and experience in making cool products, esp. cloud and mobile apps. We want to help people solve their problems by using our solutions.
 
 2015 is coming. We come up with the idea that we should have new resolutions for new year to challenge ourselves [^1]. So we choose Google Go, a so-called new language that had grown fast and faster recently. We have found the Golang community that stick together and move forward day by day. Based on some articles [^2],[^3], I see that Go will be a bright candidate for building MVP, as same as powerful platform. Many companies had moved their product to Golang like Github, Dropbox, Koding ...
 
@@ -36,6 +36,8 @@ If you want to support, just follow our page and give us a kudos.
 
 - Facebook: https://www.facebook.com/dwarvesf
 - Twitter: https://twitter.com/dwarvesf
+
+And finally, if you want to join us, just leave us a message.
 
 
 [^1]: [12 resolutions for programmers](http://matt.might.net/articles/programmers-resolutions/)
