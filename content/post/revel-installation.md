@@ -15,11 +15,28 @@ authorname: Iv Kean
 authorlink: https://www.facebook.com/ivkeanle
 authorgithub: ivkean
 authorbio: Scouting Unit
-authorimage: ivkean.jpg
+authorimage: ivkean.png
 
 ---
 
-- Hiện tại đã có khá nhiều framework viết bằng Go giúp cho việc lập trình ứng dụng web được dễ dàng và hệ thống hơn như revel, beego, martini, goji, … Mỗi framework có những điểm mạnh riêng, nhưng ở bài này tui sẽ hướng dẫn các bạn cài đặt và viết ứng dụng myapp đầu tiên bằng REVEL
+- Hiện tại đã có khá nhiều framework viết bằng Go giúp cho việc lập trình ứng dụng web được dễ dàng và hệ thống hơn như revel, beego, martini, goji, … Mỗi framework có những điểm mạnh riêng, nhưng ở bài này tui sẽ hướng dẫn các bạn cài đặt và viết ứng dụng myapp đầu tiên bằng REVEL.<br>
+
+- Trong đó, beego và revel là 2 framework cung cấp mô hình MVC giúp chúng ta dễ dàng code và maintain hơn trong việc tạo ứng dụng web. <br>
+
+- Về phía martini và goji, 2 framework này tương đối giống nhau (gần giống với nodejs), nhưng chúng không hỗ trợ render view nên theo tui sẽ thích hợp hơn khi sử dụng với mục đích làm server RESTful hay cập nhật real-time cho client. <br>
+
+
+- Chúng ta tiếp tục so sánh giữa beego và revel:
++ Hot-compile/reload:
+	- Cả 2 đều hỗ trợ hot-compile/reload (không cần phải restart server để chạy code mới), nhưng ở beego, file được tự động compile mỗi khi có thay đổi (mỗi khi save), còn Revel thì không như vậy, Revel sẽ đợi đến khi nhận được request mới thực hiện compile code mới, ở mặt này theo tui thấy Revel có vẻ như sử dụng ít tài nguyên hơn. <br>
++ ORM:
+	- Revel không hỗ trợ ORM nhưng có ví dụ cách sử dụng GORP. Beego lại tự build cho mình ORM. Ở phần database, tôi sẽ hướng dẫn các bạn kết nối dễ dàng với upper.io <br>
++ Template engine: 
+	- Cả 2 đều sử dụng template engine của Golang <br>
++ Vấn đề dev: 
+	- Revel cho phép ta code và xem kết quả tốt hơn, chỉ việc refresh để xem kết quả, và kết quả hiện trên browser dù cho có lỗi, chúng vẫn được hiện lên browser. Beego thì không hiện lên browser, beego hiện lỗi lên console <br>
+	
+- Theo cá nhân tui, phần Route của Revel khá rõ ràng và gần giống như các framework PHP khác, beego thì không, nên tui sẽ thử chọn Revel để dev xem sao :D. <br>
 
 ## Trước hết là cài đặt Go
 ```sudo apt-get update```<br>
@@ -37,8 +54,8 @@ authorimage: ivkean.jpg
 - Việc cài đặt Git và mercurial cho phép ```go get``` tải về một số dependencies cần thiết cho việc cài đặt revel
 
 ## Cấu hình GOPATH 
-1. Tạo 1 folder: ```mkdir ~/goREVEL``` <br>
-2. Thông báo cho Go biết <b>GOPATH</b> là folder vừa tạo: ```export GOPATH=~/goREVEL``` <br>
+1. Tạo 1 folder: ```mkdir ~/goRevel``` <br>
+2. Thông báo cho Go biết <b>GOPATH</b> là folder vừa tạo: ```export GOPATH=~/goRevel``` <br>
 3. Lưu <b>GOPATH</b> để sử dụng cho 1 shell session: ```echo export GOPATH=$GOPATH >> ~/.bash_profile``` 
 
 ## Giờ chúng ta đã có thể cài đặt REVEL
@@ -54,7 +71,7 @@ Dòng lệnh trên thực hiện 2 việc sau:<br>
 - Công cụ REVEL command line cho phép bạn tạo(new), chạy ứng dụng(run) và đóng gói ứng dụng(package) và 1 số chức năng khác để sử dụng REVEL tiện hơn.  <br>
 
 - Để có thể sử dụng được các lệnh REVEL ở bất cứ đâu, bạn cần phải lưu <b>$GOPATH/bin</b> vào .bashrc bằng cách copy 2 dòng sau vào cuối file .bashrc: <br>
-```export GOPATH=~/goREVEL```  <br>
+```export GOPATH=~/goRevel```  <br>
 ```export PATH="$PATH:$GOPATH/bin" ```
 	
 ## Kiểm tra cài đặt 
