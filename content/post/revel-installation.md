@@ -21,29 +21,37 @@ authorimage: ivkean.jpg
 
 Hiện tại đã có khá nhiều framework viết bằng Go giúp cho việc lập trình ứng dụng web được dễ dàng và hệ thống hơn như revel, beego, martini, goji, … Mỗi framework có những điểm mạnh riêng, nhưng ở bài này tui sẽ hướng dẫn các bạn cài đặt và viết ứng dụng myapp đầu tiên bằng REVEL
 
-## Cài đặt go
+## Trước hết là cài đặt Go
 ```sudo apt-get update```<br>
 ```sudo apt-get install golang ```
 
-## Cài đặt git 
+## Tiếp đến là  git 
 ```sudo apt-get install git``` <br>
 ```sudo apt-get install build-essential libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext unzip```
 
 
-## Cài đặt mercurial 
+## Và cuối cùng là mercurial 
 ```sudo apt-get install python-setuptools python-dev build-essential``` <br>
-```sudo easy_install -U mercurial```
+```sudo easy_install -U mercurial```<br>
+
+Việc cài đặt Git và mercurial cho phép go get tải về một số dependencies cần thiết cho việc cài đặt revel
 
 ## Cấu hình GOPATH 
 1. Tạo 1 folder: ```mkdir ~/goREVEL``` <br>
 2. Thông báo cho Go biết <b>GOPATH</b> là folder vừa tạo: ```export GOPATH=~/goREVEL``` <br>
 3. Lưu <b>GOPATH</b> để sử dụng cho 1 shell session: ```echo export GOPATH=$GOPATH >> ~/.bash_profile``` 
 
-## Cài đặt REVEL
-```go get github.com/REVEL/REVEL```
+## Giờ chúng ta đã có thể cài đặt REVEL
+```go get github.com/REVEL/REVEL```<br>
 
-## Cài đặt REVEL tool	 
+Dòng lệnh trên thực hiện 2 việc sau:
++ Go sử dụng git để tải repository vào ```$GOPATH/src/github.com/revel/revel/```
++ Go tìm tất cả những dependencies cần thiết và chạy ```go get```
+
+## và cài đặt REVEL tool	 
 ```go get github.com/REVEL/cmd/REVEL``` <br>
+
+Công cụ REVEL command line cho phép bạn tạo(new), chạy ứng dụng(run) và đóng gói ứng dụng(package) và 1 số chức năng khác để sử dụng REVEL tiện hơn.  <br>
 
 Để có thể sử dụng được các lệnh REVEL ở bất cứ đâu, bạn cần phải lưu <b>$GOPATH/bin</b> vào .bashrc bằng cách copy 2 dòng sau vào cuối file .bashrc: <br>
 ```export GOPATH=~/goREVEL```  <br>
