@@ -37,7 +37,7 @@ Hiện tại đã có khá nhiều framework viết bằng Go giúp cho việc l
 ## Cấu hình GOPATH 
 1. Tạo 1 folder: ```mkdir ~/goREVEL``` <br>
 2. Thông báo cho Go biết <b>GOPATH</b> là folder vừa tạo: ```export GOPATH=~/goREVEL``` <br>
-3. Lưu GOPATH để sử dụng cho 1 shell session: ```echo export GOPATH=$GOPATH >> ~/.bash_profile``` 
+3. Lưu <b>GOPATH</b> để sử dụng cho 1 shell session: ```echo export GOPATH=$GOPATH >> ~/.bash_profile``` 
 
 ## Cài đặt REVEL
 ```go get github.com/REVEL/REVEL```
