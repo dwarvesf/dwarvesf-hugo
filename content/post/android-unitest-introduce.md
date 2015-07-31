@@ -7,7 +7,7 @@ description: "Introduce Android Unit Test"
 date: "2015-01-28T23:49:15+07:00"
 categories: intro, go, hugo
 
-coverimage: 2015-07-31-android-unitest-tutorial-1.jpg
+coverimage: 2015-07-31-android-unitest-tutorial-1.png
 
 excerpt: "Bài viết giới thiệu về Unit Test trong Android và cách thực hiện"
 
