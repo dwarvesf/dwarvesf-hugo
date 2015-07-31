@@ -22,10 +22,14 @@ authorimage: inhel.png
 
 ## Tổng quan
 
-Kiểm thử là một bước cần thiết để đảm bảo chất lượng khi xây dựng ứng dụng trên môi trường Android. Có nhiều loại kiểm thử có thể được tiến hành trên môi trường Android như:
+Kiểm thử là một bước cần thiết để đảm bảo chất lượng khi xây dựng ứng dụng trên môi trường Android. 
+
+Có nhiều loại kiểm thử có thể được tiến hành trên môi trường Android như:
+
 + Unit Testing ( Kiểm thử đơn vị )
 + Functional Testing ( Kiểm thử chức năng )
 + Integration Testing ( Kiểm thử tích hợp )
+
 Trong bài viết này, tui sẽ giới thiệu tới các bạn cách tiến hành triển khai unit test trên Android bằng cách sử dụng Robolectric.
 
 ## Các bước chuẩn bị
@@ -38,7 +42,9 @@ Kiến thức nhất định về JUnit.
 JUnit là một framework đơn giản thường được dùng để viết Unit Test trên môi trường Java.
 Các bạn có thể xem lại về JUnit ở:
 https://github.com/junit-team/junit/wiki
+
 Ở đây, tui chỉ nhắc những kiến thức có liên sẽ sử dụng trong unit testing trên Android để các bạn tiện theo dõi, gồm:
+
 -	Aggregating test in suites -  https://github.com/junit-team/junit/wiki/Aggregating-tests-in-suites 
 -	Test Fixtures - https://github.com/junit-team/junit/wiki/Test-fixtures 
 -	Assertions - https://github.com/junit-team/junit/wiki/Assertions 
@@ -83,9 +89,9 @@ Các file java dùng cho viết unit test thường được lưu trong thư m�
 
 Các file Test nên có đuôi “Test” ở cuối tên ( ví dụ: MainActivityTest.java)
 
-Để chạy được unit test sử dụng Robolectric, với mỗi file java tạo ra để chạy kiểm thử, bạn cần thêm annotation @RunWith(RobolectricGradleTestRunner.class). Một việc nữa cần làm là cấu hình môi trường chạy kiểm thử thong qua annotation @Config()
+Để chạy được unit test sử dụng Robolectric, với mỗi file java tạo ra để chạy kiểm thử, bạn cần thêm annotation ```@RunWith(RobolectricGradleTestRunner.class)```. Một việc nữa cần làm là cấu hình môi trường chạy kiểm thử thong qua annotation ```@Config()```
 
-Ví dụ, tôi cấu hình cho file MainActivityTest.java chạy unit test sử dụng Robolectric:
+Ví dụ, tôi cấu hình cho file ```MainActivityTest.java``` chạy unit test sử dụng Robolectric:
 
 ```
 package com.example.nambv.robolectric_example;
@@ -131,7 +137,7 @@ public class MainActivityTest {
 * Lưu ý: Tất cả các phương thức được implement để chạy unit test phải được khai báo ở dạng public.
 
 Để chạy được unit test này, tui định nghĩa một TextView và một Button ở MainActivity như sau:
-File MainActivity.java:
+File ```MainActivity.java```:
 
 ```
 public class MainActivity extends Activity {
@@ -156,7 +162,7 @@ public class MainActivity extends Activity {
     }
 }
 ```
-File activity_main.xml:
+File ```activity_main.xml```:
 ```
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -183,7 +189,7 @@ File activity_main.xml:
 
 </LinearLayout>
 ```
-File values/strings.xml:
+File ```values/strings.xml```:
 ```
 <resources>
     <string name="app_name">robolectric-example</string>
@@ -194,17 +200,17 @@ File values/strings.xml:
 </resources>
 ```
 
-Kịch bản test ở đây là, ban đầu TextView hiển thị nội dung là “Hello world!”, khi tui click vào button “Click Me!”, TextView sẽ cập nhật nội dung thành “You clicked on button!”.
+Kịch bản test ở đây là, ban đầu TextView hiển thị nội dung là ```“Hello world!”```, khi tui click vào button ```“Click Me!”```, TextView sẽ cập nhật nội dung thành ```“You clicked on button!”```.
 
 Chúng ta tiến hành xem lại các phương thức đã được implement ở file :
-Trước tiên, tui khởi tạo một đối tượng MainActivity kiểu private và chưa gán giá trị:
+Trước tiên, tui khởi tạo một đối tượng ```MainActivity``` kiểu ```private``` và chưa gán giá trị:
 
 ```
 private MainActivity mActivity;
 ```
 
-Tiếp theo, tui viết phương thức setUp() và cho throw Exception nếu  phương thức này không chạy được và có lỗi xảy ra. Lưu ý phương thức này có gắn annotation là @Before, tức là nó sẽ được chạy trước khi chạy các  phương thức có gắn annotations là @Test. Phương thức này thường được dùng để khai báo, định nghĩa các dữ liệu cần thiết trước khi tiến hành kiểm thử.
-Lưu ý: Phương thức được gắn annotation @Before sẽ được gọi trước mỗi lần chạy một unit test
+Tiếp theo, tui viết phương thức ```setUp()``` và cho ```throw Exception``` nếu  phương thức này không chạy được và có lỗi xảy ra. Lưu ý phương thức này có gắn annotation là ```@Before```, tức là nó sẽ được chạy trước khi chạy các  phương thức có gắn annotations là ```@Test```. Phương thức này thường được dùng để khai báo, định nghĩa các dữ liệu cần thiết trước khi tiến hành kiểm thử.
+Lưu ý: Phương thức được gắn annotation ```@Before``` sẽ được gọi trước mỗi lần chạy một unit test
 
 ```
 @Before
@@ -216,8 +222,8 @@ public void setUp() throws Exception {
 
 Ở đây, tui tiến hành tạo và gán giá trị cho đối tượng mActivity để chắc rằng đối tượng mActivity có giá trị khác null trước khi tiến hành kiểm thử 
 
-Các phương thức được viết để chạy unit test sẽ được gắn annotation là @Test.
-Tiếp theo là phương thức chạy kiểm thử xem MainActivity mà tui đã khởi tạo ban đầu có chạy đúng như mong đợi của tui không. Nếu không, throw Exception và thông báo lỗi:
+Các phương thức được viết để chạy unit test sẽ được gắn annotation là ```@Test```.
+Tiếp theo là phương thức chạy kiểm thử xem MainActivity mà tui đã khởi tạo ban đầu có chạy đúng như mong đợi của tui không. Nếu không, ```throw Exception``` và thông báo lỗi:
 
 ```
 @Test
@@ -256,7 +262,7 @@ clickingClickMeButtonChangesHelloWorldText()
 
 {{% img src="/images/2015-07-31-android-unitest-tutorial-5.png" class="third right" %}}
 
-Sau đó, bạn right-click vào package trong thư mục src/test và chọn Run:
+Sau đó, bạn right-click vào package trong thư mục ```src/test``` và chọn Run:
 
 {{% img src="/images/2015-07-31-android-unitest-tutorial-6.png" class="third right" %}}
 
@@ -268,11 +274,11 @@ Kết quả chạy unit test là SUCESSFUL, tức là expected result đúng v�
 
 {{% img src="/images/2015-07-31-android-unitest-tutorial-8.png" class="third right" %}}
 
-Ngoài ra, bạn có thể xem kết quả chạy unit test trên web  bằng cách mở file index.html trong folder build/reports/tests/debug:
+Ngoài ra, bạn có thể xem kết quả chạy unit test trên web  bằng cách mở file ```index.html``` trong folder ```build/reports/tests/debug```:
 
 {{% img src="/images/2015-07-31-android-unitest-tutorial-9.png" class="third right" %}}
 
-Nội dung file index.html:
+Nội dung file ```index.html```:
 
 {{% img src="/images/2015-07-31-android-unitest-tutorial-10.png" class="third right" %}}
 
@@ -295,9 +301,12 @@ Tiến hành chạy lại unit test:
 {{% img src="/images/2015-07-31-android-unitest-tutorial-11.png" class="third right" %}}
 
 Kết quả cho thấy có 1 unit test bị failed, mở lại file index.html ta sẽ thấy kết quả như sau:
-Nhấn vào test case bên dưới Failed tests, sẽ thấy lỗi sai của test case này:
 
 {{% img src="/images/2015-07-31-android-unitest-tutorial-12.png" class="third right" %}}
+
+Nhấn vào test case bên dưới Failed tests, sẽ thấy lỗi sai của test case này:
+
+{{% img src="/images/2015-07-31-android-unitest-tutorial-13.png" class="third right" %}}
 
 Kết quả mong đợi trong test case là “Wrong content!” trong khi kết quả khi chạy lại là “You clicked on button!” nên test case này bị failed và throw exception. 
 
