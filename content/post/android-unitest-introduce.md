@@ -52,8 +52,11 @@ https://github.com/junit-team/junit/wiki
 ## Giới thiệu về Robolectric
 
 Robolectric là một framework cho phép bạn viết unit test và chạy chúng trên môi trường JVM mà không cần chạy ứng dụng Android một cách trực tiếp trên thiết bị.
-URL trang chủ: http://robolectric.org 
+
+URL trang chủ: http://robolectric.org
+
 Robolectric được viết dựa trên framework JUnit 4.
+
 
 ## Sử dụng Robolectric trong Android Studio
 
