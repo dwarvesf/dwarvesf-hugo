@@ -1,6 +1,6 @@
 ---
 
-baseurl:            http://blog.dwarvesf.com/
+baseurl:            http://devblog.dwarvesf.com/
 pygmentsuseclasses: true 
 theme:              hugo-incorporated
 
@@ -8,13 +8,13 @@ params:
   inc:
     # Blog Information
     title:        "Dwarves Foundation"
-    subtitle:     "We are Dwarves. We love #gopher"
+    subtitle:     "We are Dwarves. We build innovative products, give a hand to build companies and also give seed investment."
     cover_image:  cover.png
     logo:         logo.png
 
     # Company information
     company:      Dwarves Foundation
-    url:          http://blog.dwarvesf.com/
+    url:          http://devblog.dwarvesf.com/
     facebook:     dwarvesf
     github:       dwarvesf
     twitter:      dwarvesf
