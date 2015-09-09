@@ -91,7 +91,7 @@ Lưu ý khi các bạn bỏ file _test.go vào trong thư mục, để chạy c�
 go test ./...
 ```
 Mình chạy câu lệnh trên và đây là kết quả
-{{% img src="/images/firstResultTest.png" class="third right" %}}
+{{% img src="/images/firstresultTest.png" class="third right" %}}
 
 Test pass vì actual value và expected value giống nhau.  	
 
