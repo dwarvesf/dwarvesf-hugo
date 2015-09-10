@@ -4,7 +4,7 @@ title: Hướng dẫn sử dụng Testing trong Go
 draft: false
 description: "Unit Test trong Go"
 date: "2015-09-09T15:01:07+07:00"
-categories: intro, go, hugo
+categories: intro, go, testing
 
 coverimage: 2015-01-25-hugo-cover.png
 
