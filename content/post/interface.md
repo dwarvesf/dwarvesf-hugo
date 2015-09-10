@@ -3,14 +3,14 @@
 
 date: "2015-09-10T13:09:56+07:00"
 draft: false
-title: "Giới thiệu Interface của Go"
+title: "Giới thiệu Interface trong GoLang"
 
 description: "Interface trong Go và cách sử dụng"
 categories: intro, go, hugo
 
 coverimage: 2015-01-25-hugo-cover.png
 
-excerpt: "Như các bạn đã biết, testing trong lập trình cũng quan trọng như việc viết code. Testing đơn giản là đảm bảo phần mềm hoạt động đúng với mong muốn của khách hang và trong quá trình sử dụng, giảm thiểu khả năng xảy ra lỗi."
+excerpt: "Trong bài này mình sẽ trình bày những gì mình tìm hiểu được về interface trong Go, khái niệm, khai báo cũng như cách sử dụng và một vài ví dụ thực tế."
 
 authorname: Lê Ngọc Thạch 
 authorlink: http://runikikat.com
