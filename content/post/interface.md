@@ -40,7 +40,7 @@ Interface trong Go follow concept Duck typing như sau:
 ```
 When I see a bird that walks like a duck and swims like a duck and quacks like a duck, I call that bird a duck.
 ```
-Có nghĩa là nếu một con nào có thể đi như con vịt, bơi như con vịt thì tôi gọi đó là con vịt.
+Có nghĩa là nếu một con nào có thể đi như con vịt, bơi như con vịt và quạc quạc như con vịt thì tôi gọi đó là con vịt.
 
 Mình sẽ đưa một ví dụ cụ thể. Mình có struct User, struct này có một hàm SayYourName()
 ```
