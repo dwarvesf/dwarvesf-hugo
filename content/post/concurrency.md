@@ -5,12 +5,12 @@ date: "2015-09-15T13:09:56+07:00"
 draft: false
 title: "Concurrency trong Go Lang"
 
-description: "Khái niệm và cách sử dụng concurrencty trong Go"
+description: "Khái niệm và cách sử dụng concurrency trong Go"
 categories: intro, go, hugo,concurrency
 
 coverimage: blog-cover.jpg
 
-excerpt: "Trong bài này mình sẽ trình bày những gì mình tìm hiểu được về interface trong Go, khái niệm, khai báo cũng như cách sử dụng và một vài ví dụ thực tế."
+excerpt: "Concurrency trong Go được đánh giá là một trong những đặc điểm nổi bật nhất của Go. Trong bài này mình sẽ trình bày một số khái niệm căn bản và đưa ra vài ví dụ của concurrency trong Go."
 
 authorname: Lê Ngọc Thạch 
 authorlink: http://runikikat.com
@@ -20,12 +20,12 @@ authorbio: Unknown
 authorimage: gancho.png
 
 ---
-- Concurrency trong Go được đánh giá là một trong những đặc điểm nổi bật nhất của Go. Trong bài này mình sẽ trình bày một số khái niệm căn bản và đưa ra vài ví dụ của concurrency trong Go
+- Concurrency trong Go được đánh giá là một trong những đặc điểm nổi bật nhất của Go. Trong bài này mình sẽ trình bày một số khái niệm căn bản và đưa ra vài ví dụ của concurrency trong Go.
 
 ## Tổng quan
   * Concurrency trong một chương trình là khi chúng ta cho phép chạy nhiều hơn một công việc(task) một cách đồng thời. 
   * Concurrency không phải là Parallelism
-  * Cocurrency dựa vào hai khái niệm cơ bản: goroutines và channels
+  * Cocurrency có vào hai khái niệm cơ bản: goroutines và channels
 
 ## Chi tiết
 Chúng ta sẽ đi vào từng phần của Concurrency trong Go.   
