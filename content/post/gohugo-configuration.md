@@ -169,13 +169,15 @@ Với mỗi account đăng kí, Github sẽ chọn một repo riêng (bạn ph�
 
 Rồi, bắt đầu đưa site lên thôi. Các bạn thực hiện các bước sau:
 
+**Notes**: Ở bên dưới để tránh nhầm lẫn nên tui đã tách ra 2 folders rời nhau. `public/` dành cho draft và `release/` dành để publish.
+
 - Tạo account github
 - Tạo repository có tên `username-hugo` để chứa source code của các file markdown
-- Xóa folder `public/`
-- Push source lên trên repo vừa mới tạo bằng cách sử dụng các lệnh git quen thuộc
-- Tạo repository có tên `username.github.io` để chứa file tĩnh html, css, js trong folder `public/`
-- Chạy command `$ git submodule add git@github.com:<username>/<username>.github.io.git public` để link repo `username.github.io` đến thư mục public.
-- Việc cuối cùng là tiến hành deploy folder `public/` lên Github thôi. Để các bạn không phải lập đi lập lại các câu lệnh chạy server để generate html tĩnh, và một số câu lệnh git khác. Tác giả đã cung cấp đoạn shell sau:
+- Ignore folder `public/`, bởi vì đây là các static files được build dưới dạng draft dùng để xem ở localhost
+- Push source lên trên repo vừa mới tạo bằng cách sử dụng các lệnh `git push` quen thuộc
+- Tạo repository có tên `username.github.io` để chứa file tĩnh html, css, js trong folder `release/`
+- Chạy command `$ git submodule add git@github.com:<username>/<username>.github.io.git release` để link repo `username.github.io` đến thư mục release.
+- Việc cuối cùng là tiến hành deploy folder `release/` lên Github thôi. Để các bạn không phải lập đi lập lại các câu lệnh chạy server để generate html tĩnh, và một số câu lệnh git khác. Tác giả đã cung cấp đoạn shell sau:
 
 ```
 #!/bin/bash
@@ -183,10 +185,10 @@ Rồi, bắt đầu đưa site lên thôi. Các bạn thực hiện các bước
 echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
 
 # Build the project. 
-hugo # if using a theme, replace by `hugo -t <yourtheme>`
+hugo -d release # if using a theme, replace by `hugo -t <yourtheme>`
 
 # Go To Public folder
-cd public
+cd release
 
 # Add changes to git.
 git add -A

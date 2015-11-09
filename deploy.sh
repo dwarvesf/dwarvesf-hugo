@@ -3,10 +3,10 @@
 echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
 
 # Build the project. 
-hugo # if using a theme, replace by `hugo -t <yourtheme>`
+hugo -d release # if using a theme, replace by `hugo -t <yourtheme>`
 
 # Go To Public folder
-cd public
+cd release
 # Add changes to git.
 git add -A
 
