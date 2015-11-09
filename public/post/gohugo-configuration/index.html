@@ -1,0 +1,414 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Cách cấu hình một site Hugo &mdash; Dwarves Foundation</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/images/logo.png"/>
+    <link href="http://devblog.dwarvesf.com//index.xml" rel="alternate" type="application/rss+xml" title="Dwarves Foundation" />
+    <meta name="title" content="http://devblog.dwarvesf.com/">
+    <link rel="canonical" href="http://devblog.dwarvesf.com/">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Cách cấu hình một site Hugo"/>
+    <meta property="og:url" content="http://devblog.dwarvesf.com/post/gohugo-configuration/"/>
+    <meta property="og:image" content="http://devblog.dwarvesf.com/images/2015-01-25-hugo-cover.png"/>   
+    <meta property="og:site_name" content="Dwarves Foundation">
+    <meta property="og:description" content="Ở phần trước tui đã giới thiệu với các bạn Hugo là gì và các thành phần cơ bản của Hugo. Ở bài này tui sẽ tập trung đi vào cấu hình và deploy site này lên Github Pages.">
+</head>
+<body>
+    
+<section class="site-nav">
+    <header>
+        <nav id="navigation">
+            <a class="brand" href="/">
+                <img src="/images/logo.png" alt="Inc">
+            </a>
+            <a href="/" class="home">Blog</a>
+            
+            <a href="http://dwarvesf.com/">About</a>
+            <a></a>
+        </nav>
+        <nav class="tagline">
+            
+            
+        </nav>
+    </header>
+</section>
+
+
+
+<div class="article-cover">
+    <div>
+        <img src="/images/2015-01-25-hugo-cover.png" class="image">
+    </div>
+</div>
+
+<article>
+
+    <div class="container">
+        <header>
+            <div class="meta">
+                By <address><a rel="author" href="http://tieubao.me" title="Tiểu Bảo" target="_blank">Tiểu Bảo</a></address> &mdash;
+                <time pubdate datetime="2015-01-26" title="2015-01-26">January 26, 2015</time>
+            </div>
+            <h1 class="title">Cách cấu hình một site Hugo</h1>
+            <h2 class="subtitle">Hugo - a static site generator</h2>
+        </header>
+
+        <section>
+            
+
+<p>Ở phần trước tui đã giới thiệu với các bạn Hugo là gì và các thành phần cơ bản của Hugo. Ở bài này tui sẽ tập trung đi vào cấu hình và deploy site này lên Github Pages.</p>
+
+<h2 id="configuration:da422b2c8fa584de4248418c3e12be31">Configuration</h2>
+
+<p>Cấu trúc thông thường của một site Hugo</p>
+
+<pre><code>  ▸ archetypes/
+  ▸ content/
+  ▸ layouts/
+  ▸ static/
+    config.toml
+</code></pre>
+
+<p>Trong đó file <code>config.toml</code> đóng vai trò lưu trữ các cấu hình chung như: Tên site, URL, theme, social handle ..v.v. Hugo hỗ trợ đọc file config này với 3 đuôi chính: toml, yaml và json. <code>Json</code> thì mọi người đã quá quen thuộc, <code>yaml</code> là đuôi được sử dụng phổ biến của các file config bên ngôn ngữ Ruby, framework Octopress cũng sử dụng đuôi file này; <a href="https://github.com/toml-lang/toml"><code>toml</code></a> là kiểu ngôn ngữ mới ra đời, cũng nhằm mục đích tạo những file cấu hình đơn giản, dễ đọc và dễ hiểu nhất cho cả người và máy. Các bạn có thể tham khảo thêm ở Github. Không qua thân thuộc với <code>toml</code> nên tui quyết định vẫn giữ và sử dụng đuôi <code>.yaml</code></p>
+
+<p>Ví dụ file cấu hình của tui:</p>
+
+<pre><code class="language-yaml">
+---
+
+baseurl:            http://blog.dwarvesf.com/
+pygmentsuseclasses: true 
+theme:              hugo-incorporated
+
+params:
+  inc:
+    # Blog Information
+    title:        &quot;Dwarves Foundation&quot;
+    subtitle:     &quot;We are Dwarves. We love #gopher&quot;
+    cover_image:  cover.png
+    logo:         logo.png
+
+</code></pre>
+
+<h2 id="theme:da422b2c8fa584de4248418c3e12be31">Theme</h2>
+
+<p>Hugo cung cấp một cơ chế load theme khá tiện lợi. Các theme được phát triển bởi nhiều lập trình viên khác nhau và tạo một pull request tới repository <a href="https://github.com/spf13/hugoThemes">spf13/hugoThemes</a>.</p>
+
+<p>Để install một theme, bạn chỉ cần clone repo mong muốn hoặc toàn bộ repo vào thư mục <code>themes</code>.</p>
+
+<pre><code>$ git clone --recursive https://github.com/spf13/hugoThemes themes
+</code></pre>
+
+<p>Khi tiến hành chạy thử Hugo, bạn chỉ cần chọn loại theme mong muốn. Bên dưới là câu lệnh chạy server hugo với theme <code>hype</code></p>
+
+<pre><code>$ hugo server --theme=hyde --buildDrafts
+</code></pre>
+
+<p>Cấu trúc của một thư mục chứa theme khá đơn giản và hoàn toàn mô phỏng lại thư mục chứa site hiện tại. Ví dụ:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-01-26-hugo-theme-folder.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Tùy loại theme mà các file cấu hình sẽ khác nhau về số lượng giá trị cần cấu hình cũng như tên gọi.</p>
+
+<pre><code># File cấu hình theme herring-cove
+
+name = &quot;Herring Cove&quot;
+description = &quot;Herring Cove is ported from the jekyll theme of the same name&quot;
+license = &quot;MIT&quot;
+tags = [&quot;blog&quot;, &quot;company&quot;]
+
+[author]
+    name = &quot;spf13&quot;
+    homepage = &quot;http://spf13.com&quot;
+
+# If Porting existing theme
+[original]
+    author =  &quot;arnp&quot;
+    repo = &quot;http://www.github.com/arnp/herring-cove&quot;
+
+</code></pre>
+
+<pre><code># File cấu hình theme hugo-incorperated
+---
+
+baseurl:            http://blog.nilproductions.com/
+pygmentsuseclasses: true 
+theme:              hugo-incorporated
+
+params:
+  inc:
+    # Blog Information
+    title:        &quot;Hugo Incorporated&quot;
+    subtitle:     &quot;Modern Hugo based blog for companies&quot;
+    cover_image:  blog-cover.jpg
+    logo:         logo.png
+
+    # Company information
+    company:      nil productions 
+    url:          http://nilproductions.com/
+    facebook:     
+    github:       nilproductions
+    twitter:      nw_iw
+    gplus:        ''
+    about_link:   http://nilproductions.com/about/
+
+    # Product Information
+    product_link: http://nilproductions.com/
+    tagline:      &quot;Coming up nil for quite some time.&quot;
+
+    # Comments
+    disqus:
+      # Eg. &quot;exampleblog&quot; Set to false to disable comments
+      shortname:  false
+
+    # Sharing settings
+    sharing:
+      twitter:    true
+      facebook:   true
+      gplus:      false
+      hn:         true
+
+    # Analytics     
+    analytics:
+      google: false # Add tracking code in _includes/_google-analytics.html
+
+    # Google Fonts
+    google_font: 'Droid+Sans:400,700'
+    
+    # Setup your fonts, colors etc at _assets/stylesheets/main.scss
+</code></pre>
+
+<h5 id="nguyên-tắc-hoạt-động:da422b2c8fa584de4248418c3e12be31">Nguyên tắc hoạt động</h5>
+
+<p>Khi tiến hành generate các file html tĩnh, hugo sẽ lấy theme được chọn cùng với cấu hình hiện tại theo thứ tự ưu tiên từ bên ngoài vào bên trong, tức là sẽ lấy các giá trị config, style &hellip; của thư mục root trước, sau đó mới đến các giá trị bên trong thư mục theme và tiến hành kết với dữ liệu trong các file markdown. Điều này giúp các ban có thể linh hoạt thay đổi cấu hình của các theme một cách dễ dàng.</p>
+
+<p>Mỗi theme tuy được viết cấu trúc khác nhau, nhưng đều tuân thủ theo nguyên tắc chia để trị, các thành phần sẽ được cắt nhỏ thành các partial, đến trang nào cần thì mới include vào để load lên.</p>
+
+<p>Hugo cho phép định nghĩa nhiều loại post khác nhau, với mỗi loại post các bạn có thể lên các layout khác nhau. Điều này tạo nên sự đa dạng cho trang web và đây cũng là một phần mà tui rất thích. Với tính năng này, tui có thể xây dựng một site với đầy đủ các phần Home, Blog, About, Jobs &hellip; mà không bị gò bó như các blog framework khác. Nếu các bạn quan tâm đến tính năng này như tui thì có thể tham khảo trang <a href="http://chimeraarts.org">http://chimeraarts.org</a></p>
+
+<h2 id="deploy-static-site:da422b2c8fa584de4248418c3e12be31">Deploy static site</h2>
+
+<p>Sau khi chạy câu lệnh <code>hugo server</code>, Hugo sẽ generate folder <code>public/</code> đầy đủ đồ chơi html, css và javascript như hình phía trên. Đến lúc này các bạn có một vài công việc có thể tự nghịch tùy vào sở thích của mình:</p>
+
+<ul>
+<li>Custom lại một theme đã có sẵn bằng cách edit trực tiếp vào folder <code>themes/</code> hoặc tạo thêm các file nằm rời để override các giá trị mặc định</li>
+<li>Tự một theme mới luôn cho oách <a href="http://gohugo.io/themes/creation/">http://gohugo.io/themes/creation/</a></li>
+<li>Đưa folder <code>public/</code> lên trên một host nào đó mà các bạn có, như vậy là xong. Bạn có thể tự dựng Raspi, xin một host free nào đó rồi upload lên .v..v. Còn tui thì tui lựa chọn <a href="https://pages.github.com">Github Pages</a>, một tính năng khá đỉnh của Github.</li>
+</ul>
+
+<p>Với mỗi account đăng kí, Github sẽ chọn một repo riêng (bạn phải tự tạo) với tên repo có dạng <code>username.github.io</code>, mặc định branch <code>master</code> để làm một site từ các html tĩnh. Bạn có thể tham khảo source code của site Dwarves Foundation hiện tại ở: <a href="https://github.com/dwarvesf/dwarvesf.github.io">https://github.com/dwarvesf/dwarvesf.github.io</a>. Hoặc một số site khác đỉnh hơn mà tui sực nhớ:</p>
+
+<ul>
+<li>Square: <a href="https://github.com/square/square.github.io">https://github.com/square/square.github.io</a></li>
+<li>Blog cá nhân của tui: <a href="https://github.com/tieubao/tieubao.github.io">https://github.com/tieubao/tieubao.github.io</a></li>
+</ul>
+
+<p>Rồi, bắt đầu đưa site lên thôi. Các bạn thực hiện các bước sau:</p>
+
+<ul>
+<li>Tạo account github</li>
+<li>Tạo repository có tên <code>username-hugo</code> để chứa source code của các file markdown</li>
+<li>Xóa folder <code>public/</code></li>
+<li>Push source lên trên repo vừa mới tạo bằng cách sử dụng các lệnh git quen thuộc</li>
+<li>Tạo repository có tên <code>username.github.io</code> để chứa file tĩnh html, css, js trong folder <code>public/</code></li>
+<li>Chạy command <code>$ git submodule add git@github.com:&lt;username&gt;/&lt;username&gt;.github.io.git public</code> để link repo <code>username.github.io</code> đến thư mục public.</li>
+<li>Việc cuối cùng là tiến hành deploy folder <code>public/</code> lên Github thôi. Để các bạn không phải lập đi lập lại các câu lệnh chạy server để generate html tĩnh, và một số câu lệnh git khác. Tác giả đã cung cấp đoạn shell sau:</li>
+</ul>
+
+<pre><code>#!/bin/bash
+
+echo -e &quot;\033[0;32mDeploying updates to GitHub...\033[0m&quot;
+
+# Build the project. 
+hugo # if using a theme, replace by `hugo -t &lt;yourtheme&gt;`
+
+# Go To Public folder
+cd public
+
+# Add changes to git.
+git add -A
+
+# Commit changes.
+msg=&quot;Rebuilding site on `date`&quot;
+if [ $# -eq 1 ]
+  then msg=&quot;$1&quot;
+fi
+git commit -m &quot;$msg&quot;
+
+# Push source and build repos.
+git push origin master
+
+# Come Back
+cd ..
+</code></pre>
+
+<p>Các bạn chỉ cần vác thằng mày về, change mode +x cho nó <code>chmod +x deploy.sh</code>. Những lần sau khi muốn deploy blog lên Github, bạn chỉ cd vào thư mục chứa site của mình, rồi chạy:</p>
+
+<pre><code>$ ./deploy.sh &quot;&lt;message&gt;&quot;
+</code></pre>
+
+<p>Nếu các bạn rảnh rỗi thì có thể tìm hiểu thêm về git và submodule để có thể tự viết đoạn shell riêng cho mình. Một số người dùng Hugo cũng có viết về cách mà họ tùy biến, các bạn có thể dễ dàng tìm thấy qua Google. Thực hiện hoàn tất các việc trên, bạn có thể vào địa chỉ <code>https://username.github.io</code> để xem lại thành quả của mình.</p>
+
+<h4 id="tên-miền-riêng:da422b2c8fa584de4248418c3e12be31">Tên miền riêng</h4>
+
+<p>Đối với các bạn chịu đầu tư mua một domain riêng cho mình, các bạn có thể thực hiện các bước sau để cấu hình:</p>
+
+<ul>
+<li>Tạo folder <code>static/</code> nếu chưa có</li>
+<li>Tạo file <code>CNAME</code> có nội dung là tên miền mà bạn đã mua</li>
+</ul>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-01-26-cname.png"  />
+    
+    
+</figure>
+
+</p>
+
+<ul>
+<li>Deploy lại lên Github</li>
+<li>Cấu hình URL Forwarding trên site mà các bạn đã mua domain</li>
+</ul>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-01-26-hugo-url-forward.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>OK done. Bài này tui xin kết thúc tại đây, chúc các bạn thành công và vui vẻ với trang cá nhân của mình. Bài sau tui sẽ tiếp tục hướng dẫn cách mà nhiều thành viên có thể cùng viết bài trên Hugo.</p>
+
+            
+
+<div class="social">
+    <div>
+        <a href="http://news.ycombinator.com/submit" class="hn-share-button">Vote on HN</a>
+    </div>
+    <div>
+        <a href="https://twitter.com/share" class="twitter-share-button"  data-related="dwarvesf" data-text="Cách cấu hình một site Hugo - Hugo - a static site generator">Tweet</a>
+    </div>
+    <div>
+        <div class="fb-like" data-width="150" data-layout="button_count" data-action="like" data-show-faces="true" data-send="false"></div>
+    </div>
+</div>
+
+        </section>
+
+        <footer>
+            <address>
+               <img src="/images/gancho.png">
+                <p>Written by <strong><a rel="author" href="https://twitter.com/mrcexii" title="Tiểu Bảo" target="_blank">Tiểu Bảo</a></strong><br>
+                <span class="muted">Tonta-Chief</span>
+                </p>
+            </address>
+
+        </footer>
+
+        
+        <section>
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//dwarvesf.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+        </section>
+        
+    </div>
+</article>
+
+<footer class="site-footer">
+    <div class="container">
+        <nav>
+            <a href="http://devblog.dwarvesf.com/">Dwarves Foundation</a> &middot;
+            <a href="/">Blog</a> &middot;
+            
+            <a href="http://dwarvesf.com/">About</a>
+        </nav>
+        
+        <nav class="social">
+            
+            <a href="https://twitter.com/dwarvesf" title="Follow on Twitter" target="_blank"><i class="icon icon-twitter black"></i></a>
+            
+            
+            <a href="https://github.com/dwarvesf" title="Follow on Github" target="_blank"><i class="icon icon-github black"></i></a>
+            
+            
+            <a href="http://facebook.com/dwarvesf" title="Follow on Facebook" target="_blank"><i class="icon icon-facebook black"></i></a>
+                
+            <a href="/index.xml" title="RSS Feed">
+                <i class="icon icon-rss black"></i>
+            </a>
+        </nav>
+    </div>
+</footer>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<div id="fb-root"></div>
+
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=1526296360976332";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>
+    (function(d, t) {
+        var g = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        g.src = '//hnbutton.appspot.com/static/hn.min.js';
+        s.parentNode.insertBefore(g, s);
+    }(document, 'script'));
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58452796-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+  
+
+</body>
+</html>
+

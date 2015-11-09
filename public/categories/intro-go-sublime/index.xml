@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Intro Go Sublime on </title>
+    <link>http://devblog.dwarvesf.com/categories/intro-go-sublime/</link>
+    <description>Recent content in Intro Go Sublime on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 11 Aug 2015 13:50:47 +0700</lastBuildDate>
+    <atom:link href="http://devblog.dwarvesf.com/categories/intro-go-sublime/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Cài đặt Sublime Text và plugins hỗ trợ code Golang</title>
+      <link>http://devblog.dwarvesf.com/post/install-sublime-and-plugin-golang/</link>
+      <pubDate>Tue, 11 Aug 2015 13:50:47 +0700</pubDate>
+      
+      <guid>http://devblog.dwarvesf.com/post/install-sublime-and-plugin-golang/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Sublime Text là một editor, được hỗ trợ syntax cho nhiều ngôn ngữ java, html, css, python, … có khá nhiều plugin phong phú và đa dạng để hỗ trợ cho việc code dễ dàng và nhanh hơn. Hôm nay tui sẽ hướng dẫn các bạn cài đặt sublime text cũng như các plugin hỗ trợ việc code Golang.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Cài đặt SublimeText:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Với Ubuntu:&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;For Sublime-Text-2:
+sudo add-apt-repository ppa:webupd8team/sublime-text-2 
+sudo apt-get update 
+sudo apt-get install sublime-text 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;For Sublime-Text-3:
+sudo add-apt-repository ppa:webupd8team/sublime-text-3 
+sudo apt-get update 
+sudo apt-get install sublime-text-installer
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Với Mac:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%20Build%203083.dmg
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Sau khi cài đặt xong, chúng ta sẽ cài thêm các plugin như sau:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Chạy sublime text.&lt;/li&gt;
+&lt;li&gt;Cài đặt Package Control. Sử dụng tổ hợp phím Ctrl + `
+
+&lt;figure class=&#34;third right&#34;&gt;
+    
+        &lt;img src=&#34;http://devblog.dwarvesf.com/images/post/2015-08-11/Screen%20Shot%202015-08-10%20at%2010.41.43%20PM.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Nếu là sublime 3, chúng ta paste code này:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import urllib.request,os,hashlib; h = &#39;eb2297e1a458f27d836c04bb0cbaf282&#39; + &#39;d0e7a3098092775ccb37ca9d6b2e4b7d&#39;; pf = &#39;Package Control.sublime-package&#39;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( &#39;http:/ /packagecontrol.io/&#39; + pf.replace(&#39; &#39;, &#39;%20&#39;)).read(); dh = hashlib.sha256(by).hexdigest(); print(&#39;Error validating download (got %s instead of %s), please try manual install&#39; % (dh, h)) if dh != h else open(os.path.join( ipp, pf), &#39;wb&#39; ).write(by)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nếu sublime 2, chúng ta paste code này:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import urllib2,os,hashlib; h = &#39;eb2297e1a458f27d836c04bb0cbaf282&#39; + &#39;d0e7a3098092775ccb37ca9d6b2e4b7d&#39;; pf = &#39;Package Control.sublime-package&#39;; ipp = sublime.installed_packages_path(); os.makedirs( ipp ) if not os.path.exists(ipp) else None; urllib2.install_opener( urllib2.build_opener( urllib2.ProxyHandler()) ); by = urllib2.urlopen( &#39;http://packagecontrol.io/&#39; + pf.replace(&#39; &#39;, &#39;%20&#39;)).read(); dh = hashlib.sha256(by).hexdigest(); open( os.path.join( ipp, pf), &#39;wb&#39; ).write(by) if dh == h else None; print(&#39;Error validating download (got %s instead of %s), please try manual install&#39; % (dh, h) if dh != h else &#39;Please restart Sublime Text to finish installation&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Để biết thêm chi tiết về việc cài đặt Package Control, các bạn có thể vào trang:
+&lt;a href=&#34;https://packagecontrol.io/installation&#34;&gt;https://packagecontrol.io/installation&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Sau khi cài đặt Package Control, chúng ta có thể vào:
+
+&lt;figure class=&#34;third right&#34;&gt;
+    
+        &lt;img src=&#34;http://devblog.dwarvesf.com/images/post/2015-08-11/Screen%20Shot%202015-08-10%20at%2010.44.49%20PM.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Chọn Package Control.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;third right&#34;&gt;
+    
+        &lt;img src=&#34;http://devblog.dwarvesf.com/images/post/2015-08-11/Screen%20Shot%202015-08-10%20at%2010.47.55%20PM.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Chọn install package và search các package cần thiết và install.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Ở đây, ta sẽ tiến hành install GoSublime và GoImport&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Với GoSublime, chúng ta có thể:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;code completion&lt;/li&gt;
+&lt;li&gt;check lint/syntax Go&lt;/li&gt;
+&lt;li&gt;list danh sách các biến, function được khai báo trong file&lt;/li&gt;
+&lt;li&gt;và nhiều chức năng khác. Để biết thêm chi tiết về các tính năng, các bạn có thể vào trang &lt;a href=&#34;https://github.com/DisposaBoy/GoSublime&#34;&gt;https://github.com/DisposaBoy/GoSublime&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Với GoImport, chúng ta có thể tự động import hoặc remove package khỏi file hiện tại sau khi Save.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Giờ thì chúng ta tiến hành install các plugin:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Cài đặt GoImport&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Chắc chắn rằng bạn đã set GOPATH và có $GOPATH/bin. Download package GoImport về:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;go get -u golang.org/x/tools/cmd/goimports&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Cài đặt  GoSublime&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Preferences -&amp;gt; Package Control -&amp;gt; Install Package -&amp;gt; type GoSublime. Sau khi click, sublime text sẽ cài đặt plugin cho bạn.&lt;/p&gt;
+
+&lt;p&gt;Các bạn có thể vào phần List Packages để kiểm tra các package đã được cài.&lt;/p&gt;
+
+&lt;p&gt;Sau khi cài đặt GoSublime, ta tiến hành config như sau:
+
+&lt;figure class=&#34;third right&#34;&gt;
+    
+        &lt;img src=&#34;http://devblog.dwarvesf.com/images/post/2015-08-11/Screen%20Shot%202015-08-10%20at%2011.10.35%20PM.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;
+
+&lt;p&gt;Vào phần Setting – User, và copy đoạn này vào:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    &amp;quot;env&amp;quot;: {
+        &amp;quot;GOPATH&amp;quot;: &amp;quot;$HOME/Documents/go:$GS_GOPATH&amp;quot;,
+        &amp;quot;GOROOT&amp;quot;: &amp;quot;/usr/local/go/&amp;quot;
+    },
+    &amp;quot;fmt_cmd&amp;quot;: [&amp;quot;goimports&amp;quot;]
+} 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Sau đó, chúng ta restart lại sublime.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Kiểm tra&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Kiểm tra GoImport, ta tạo 1 file .go và type fmt.Println(“test”), save lại, nếu file tự động thêm package fmt thì GoImport đã được cài đặt thành công.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Sau đó, kiểm tra “code completion” của GoSublime bằng cách type fmt lần nữa, nếu hiện như hình sau, thì bạn đã cài plugin GoSublime thành công.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;third right&#34;&gt;
+    
+        &lt;img src=&#34;http://devblog.dwarvesf.com/images/post/2015-08-11/Screen%20Shot%202015-08-10%20at%2011.16.18%20PM.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Chúc các bạn cài đặt thành công và cải thiện được tốc độ code nhanh hơn với 2 plugin trên :).&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

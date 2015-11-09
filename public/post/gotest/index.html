@@ -1,0 +1,308 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Hướng dẫn sử dụng Testing trong Go &mdash; Dwarves Foundation</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/images/logo.png"/>
+    <link href="http://devblog.dwarvesf.com//index.xml" rel="alternate" type="application/rss+xml" title="Dwarves Foundation" />
+    <meta name="title" content="http://devblog.dwarvesf.com/">
+    <link rel="canonical" href="http://devblog.dwarvesf.com/">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Hướng dẫn sử dụng Testing trong Go"/>
+    <meta property="og:url" content="http://devblog.dwarvesf.com/post/gotest/"/>
+    <meta property="og:image" content="http://devblog.dwarvesf.com/images/2015-01-25-hugo-cover.png"/>   
+    <meta property="og:site_name" content="Dwarves Foundation">
+    <meta property="og:description" content="Như các bạn đã biết, testing trong lập trình cũng quan trọng như việc viết code. Testing đơn giản là đảm bảo phần mềm hoạt động đúng với mong muốn của khách hang và trong quá trình sử dụng, giảm thiểu khả năng xảy ra lỗi.">
+</head>
+<body>
+    
+<section class="site-nav">
+    <header>
+        <nav id="navigation">
+            <a class="brand" href="/">
+                <img src="/images/logo.png" alt="Inc">
+            </a>
+            <a href="/" class="home">Blog</a>
+            
+            <a href="http://dwarvesf.com/">About</a>
+            <a></a>
+        </nav>
+        <nav class="tagline">
+            
+            
+        </nav>
+    </header>
+</section>
+
+
+
+<div class="article-cover">
+    <div>
+        <img src="/images/2015-01-25-hugo-cover.png" class="image">
+    </div>
+</div>
+
+<article>
+
+    <div class="container">
+        <header>
+            <div class="meta">
+                By <address><a rel="author" href="http://runikikat.com" title="Lê Ngọc Thạch" target="_blank">Lê Ngọc Thạch</a></address> &mdash;
+                <time pubdate datetime="2015-09-09" title="2015-09-09">September 09, 2015</time>
+            </div>
+            <h1 class="title">Hướng dẫn sử dụng Testing trong Go</h1>
+            <h2 class="subtitle">Unit Test trong Go</h2>
+        </header>
+
+        <section>
+            
+
+<ul>
+<li>Như các bạn đã biết, testing trong lập trình cũng quan trọng như việc viết code. Testing đơn giản là đảm bảo phần mềm hoạt động đúng với mong muốn của khách hàng và trong quá trình sử dụng giảm thiểu khả năng xảy ra lỗi.</li>
+<li>Vậy làm thế nào để viết test trong Go? Tại sao mỗi file package của go hay có một file dạng filename_test.go đi kèm?</li>
+<li>Go cung cấp package <a href="http://golang.org/pkg/testing/">testing</a> hỗ trợ viết test. Trong bài này mình sẽ giới thiệu cách sử dụng Unit Test trong Go bằng thư viện testify</li>
+</ul>
+
+<h2 id="cài-đặt:ee81b9c68703c564e9c4b37823ad2391">Cài đặt</h2>
+
+<pre><code>go get  &quot;github.com/stretchr/testify/assert&quot;
+
+</code></pre>
+
+<h2 id="code:ee81b9c68703c564e9c4b37823ad2391">Code</h2>
+
+<p>Mình sẽ lấy ví dụ từ project của mình.<br />
+Mình có một hàm GetDirectLink nhận vào input là một link bài hát(trong trường hợp này thuộc website nhaccuatui) và output là một list url dùng để download trực tiếp.</p>
+
+<pre><code>package nhaccuatui
+
+
+func (nct *NhacCuaTui) GetDirectLink(link string) ([]string, error) {
+	if link == &quot;&quot; {
+		return nil, errors.New(&quot;Empty Link&quot;)
+	}
+
+	var listStream []string
+	if strings.Contains(link, song) {
+		urlList := strings.Split(link, &quot;.&quot;)
+		if len(urlList) &lt; 4 {
+			return nil, errors.New(&quot;Wrong Format Link&quot;)
+		}
+		req := httplib.Get(linkDownloadSong + urlList[3])
+
+		var res ResponseNhacCuaTui
+		err := req.ToJson(&amp;res)
+		if err != nil {
+			return nil, err
+		}
+		if res.Data.StreamUrl == &quot;&quot; {
+			return nil, errors.New(&quot;Invalid Link&quot;)
+		}
+		listStream = append(listStream, res.Data.StreamUrl)
+		return listStream, nil
+	}
+}
+</code></pre>
+
+<p>Bây giờ mình sẽ viết test cho hàm này. Đầu tiên mình tạo file nhaccuatui_test.go chứa các function về Testing.<br />
+Hàm đầu tiên mình sẽ test link input vào bị rỗng.</p>
+
+<pre><code>package nhaccuatui
+
+import (
+	&quot;testing&quot;
+	&quot;github.com/stretchr/testify/assert&quot;
+)
+
+var nct NhacCuaTui
+
+func TestLinkEmptyString(t *testing.T) {
+	_, err := nct.GetDirectLink(&quot;&quot;)
+	assert.Equal(t, &quot;Empty Link&quot;, err.Error())
+}
+</code></pre>
+
+<p>Câu lệnh assert.Equal cho phép so sánh hai giá trị, một là expected value(mình sẽ tính toán trước) và một là actual value(được trả về từ lúc chạy hàm). Trong trường hợp này sẽ trả về true khi err trả về đúng bằng &ldquo;Empty String&rdquo;</p>
+
+<h2 id="chạy-test:ee81b9c68703c564e9c4b37823ad2391">Chạy Test</h2>
+
+<p>Giờ chúng ta thử chạy file test trên bằng câu lệnh:</p>
+
+<pre><code>go test
+
+</code></pre>
+
+<p>Lưu ý khi các bạn bỏ file _test.go vào trong thư mục, để chạy các file test trong các thư mục đó các bạn phải chạy câu lệnh</p>
+
+<pre><code>go test ./...
+</code></pre>
+
+<p>Mình chạy câu lệnh trên và đây là kết quả
+
+<figure class="third right">
+    
+        <img src="/images/firstresultTest.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Test pass vì actual value và expected value giống nhau.</p>
+
+<p>Thử thay thế câu báo lỗi trả về thành Not Empty String và chạy lại go test</p>
+
+<pre><code>	assert.Equal(t, &quot;Not Empty Link&quot;, err.Error())
+
+</code></pre>
+
+<p>ta được kết quả</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/wrongStringReturn.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Hàm assert có rất nhiều cách sử dụng, ví dụ assert.NotNil, assert.True &hellip; tuỳ ý lựa chọn.</p>
+
+<p>Ngoài cách dùng thư viện testify các bạn có thể sử dụng các function trong testing package của Go. Mình sẽ viết lại hàm test trên bằng cách khác</p>
+
+<pre><code>
+func TestLinkEmptyString(t *testing.T) {
+	t.Log(&quot;Try to empty link, expect error output&quot;)
+	_, err :=  nct.GetDirectLink(&quot;&quot;)
+	if err == nil {
+		t.Error(&quot;Expected error of not nil but it was nil instead&quot;)
+	}
+}
+
+</code></pre>
+
+<h2 id="lời-kết:ee81b9c68703c564e9c4b37823ad2391">Lời kết</h2>
+
+<p>Trên đây là những gì mình tìm hiểu được trong quá trình implement unit testing trong Go. Còn nhiều cấp độ testing khác, rất mong nhận được đóng góp ý kiến từ các bạn.<br />
+Nếu có điều gì muốn trao đổi, liên hệ qua mail thach@dwarvesf.com với mình nha.</p>
+
+            
+
+<div class="social">
+    <div>
+        <a href="http://news.ycombinator.com/submit" class="hn-share-button">Vote on HN</a>
+    </div>
+    <div>
+        <a href="https://twitter.com/share" class="twitter-share-button"  data-related="dwarvesf" data-text="Hướng dẫn sử dụng Testing trong Go - Unit Test trong Go">Tweet</a>
+    </div>
+    <div>
+        <div class="fb-like" data-width="150" data-layout="button_count" data-action="like" data-show-faces="true" data-send="false"></div>
+    </div>
+</div>
+
+        </section>
+
+        <footer>
+            <address>
+               <img src="/images/gancho.png">
+                <p>Written by <strong><a rel="author" href="https://twitter.com/runivn" title="Lê Ngọc Thạch" target="_blank">Lê Ngọc Thạch</a></strong><br>
+                <span class="muted">Unknown</span>
+                </p>
+            </address>
+
+        </footer>
+
+        
+        <section>
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//dwarvesf.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+        </section>
+        
+    </div>
+</article>
+
+<footer class="site-footer">
+    <div class="container">
+        <nav>
+            <a href="http://devblog.dwarvesf.com/">Dwarves Foundation</a> &middot;
+            <a href="/">Blog</a> &middot;
+            
+            <a href="http://dwarvesf.com/">About</a>
+        </nav>
+        
+        <nav class="social">
+            
+            <a href="https://twitter.com/dwarvesf" title="Follow on Twitter" target="_blank"><i class="icon icon-twitter black"></i></a>
+            
+            
+            <a href="https://github.com/dwarvesf" title="Follow on Github" target="_blank"><i class="icon icon-github black"></i></a>
+            
+            
+            <a href="http://facebook.com/dwarvesf" title="Follow on Facebook" target="_blank"><i class="icon icon-facebook black"></i></a>
+                
+            <a href="/index.xml" title="RSS Feed">
+                <i class="icon icon-rss black"></i>
+            </a>
+        </nav>
+    </div>
+</footer>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<div id="fb-root"></div>
+
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=1526296360976332";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>
+    (function(d, t) {
+        var g = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        g.src = '//hnbutton.appspot.com/static/hn.min.js';
+        s.parentNode.insertBefore(g, s);
+    }(document, 'script'));
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58452796-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+  
+
+</body>
+</html>
+
