@@ -12,10 +12,13 @@
     <link href="{{ .Site.BaseURL }}/index.xml" rel="alternate" type="application/rss+xml" title="{{ .Site.Params.inc.title }}" />
     <meta name="title" content="{{ .Site.BaseURL }}">
     <link rel="canonical" href="{{ .Site.BaseURL }}">
+    
+    <meta property="og:type" content="article">
     <meta property="og:title" content="{{ .Title }}"/>
     <meta property="og:url" content="{{ .Permalink }}"/>
     <meta property="og:image" content="{{ .Site.BaseURL }}images/{{ .Params.coverimage }}"/>   
     <meta property="og:site_name" content="{{ .Site.Params.inc.title }}">
+    <meta property="og:description" content="{{.Params.excerpt}}">
 </head>
 <body>
     
