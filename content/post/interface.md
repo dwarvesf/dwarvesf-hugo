@@ -17,7 +17,7 @@ authorlink: http://runikikat.com
 authortwitter: runivn
 authorgithub: RuniVN
 authorbio: Unknown
-authorimage: gancho.png
+authorimage: chao.png
 
 ---
 - Trong bài này mình sẽ trình bày những gì mình tìm hiểu được về interface trong Go, khái niệm, khai báo cũng như cách sử dụng và một vài ví dụ thực tế.

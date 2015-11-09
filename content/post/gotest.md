@@ -15,7 +15,7 @@ authorlink: http://runikikat.com
 authortwitter: runivn
 authorgithub: RuniVN
 authorbio: Unknown
-authorimage: gancho.png
+authorimage: chao.png
 
 ---
 - Như các bạn đã biết, testing trong lập trình cũng quan trọng như việc viết code. Testing đơn giản là đảm bảo phần mềm hoạt động đúng với mong muốn của khách hàng và trong quá trình sử dụng giảm thiểu khả năng xảy ra lỗi.

@@ -13,11 +13,11 @@ coverimage: blog-cover.jpg
 excerpt: "Concurrency trong Go được đánh giá là một trong những đặc điểm nổi bật nhất của Go. Trong bài này mình sẽ trình bày một số khái niệm căn bản và đưa ra vài ví dụ của concurrency trong Go."
 
 authorname: Lê Ngọc Thạch
-authorlink: http://runikikat.com
+authorlink: http://runikitkat.com
 authortwitter: runivn
 authorgithub: RuniVN
 authorbio: Unknown
-authorimage: gancho.png
+authorimage: chao.png
 
 ---
 - Concurrency trong Go được đánh giá là một trong những đặc điểm nổi bật nhất của Go. Trong bài này mình sẽ trình bày một số khái niệm căn bản và đưa ra vài ví dụ của concurrency trong Go.

@@ -4,9 +4,9 @@
 
 date: "2015-10-16T13:09:56+07:00"
 draft: false
-title: "Vim kết hợp cùng Go lang"
+title: "Vim kết hợp cùng Golang"
 
-description: "Giới thiệu Vim và cách sử dụng Vim với Go lang"
+description: "Giới thiệu Vim và cách sử dụng Vim với Golang"
 categories: intro, go, hugo, vim
 
 coverimage: blog-cover.jpg
@@ -18,7 +18,7 @@ authorlink: http://runikitkat.com
 authortwitter: runivn
 authorgithub: RuniVN
 authorbio: Unknown
-authorimage: gancho.png
+authorimage: chao.png
 
 ---
 
@@ -115,7 +115,7 @@ authorimage: gancho.png
 ## Hướng dẫn sử dụng căn bản.
   Vim là một chương trình soạn thảo được build lần đầu tiên trên UNIX, dùng để làm việc trên môi trường ko có UI. Lúc này bàn phím chưa cũng khá thô sơ, nên các bước di chuyển trên vim hơi khác với bình thường:
 
-    {{% img src="/images/hjkl.png" class="third right" %}}
+    {{% img src="/images/2015-10-16-hjkl.png" class="third right" %}}
 
   Các bạn có thể tự tập luyện việc sử dụng các phím này bằng [vim game](http://vim-adventures.com/)       
 
@@ -188,12 +188,12 @@ authorimage: gancho.png
   Trong số này:
 
   -- nerdtree: Giúp bạn tổ chức folder trong vim dưới dạng cây thư mục, dễ dàng hơn trong việc mở file và folder. Sau khi cài đặt:
-  {{% img src="/images/nerdtree.png" class="third right" %}}
+  {{% img src="/images/2015-10-16-nerdtree.png" class="third right" %}}
 
   Nhờ plugin của git, các bạn có thể biết file nào đang sửa, thêm mới và chưa được commit.
 
   -- neocomplete: Hỗ trợ auto complete trong vim. 
-   {{% img src="/images/neocomplete.png" class="third right" %}}
+   {{% img src="/images/2015-10-16-neocomplete.png" class="third right" %}}
 
   -- autopair: Plugin giúp bạn gõ nhanh khi sử dụng các dấu " ( ' [ < bằng cách thêm vào thành một pair "" () '' [] <>
 
