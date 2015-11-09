@@ -30,11 +30,11 @@ authorimage: ivkean.png
 	+ Chúng ta tạo 1 file user.go trong thư mục app/controllers và định nghĩa cho function Index như sau:<br>
 ```
 func (c User) Index() revel.Result {
-var greeting string
-var username string
-greeting = “Hello”
-username = “ivkean”
-return c.Render(greeting,username)
+	var greeting string
+	var username string
+	greeting = “Hello”
+	username = “ivkean”
+	return c.Render(greeting,username)
 }
 ``` 
 <br>
@@ -78,6 +78,8 @@ func (c User) ShowUserName() revel.Result {
 	return c.Render(greeting,username)
 }
 ```
+
+
 - Hàm Bind có thể thực hiện với các biến:
 	+ Các loại int
 	+ String
