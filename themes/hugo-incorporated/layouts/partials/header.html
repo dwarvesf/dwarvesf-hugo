@@ -12,12 +12,12 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="/images/{{ .Site.Params.inc.logo }}"/>
-    <link href="{{ .Site.BaseUrl }}/index.xml" rel="alternate" type="application/rss+xml" title="{{ .Site.Params.inc.title }}" />
-    <meta name="title" content="{{ .Site.BaseUrl }}">
-    <link rel="canonical" href="{{ .Site.BaseUrl }}">
+    <link href="{{ .BaseUrl }}/index.xml" rel="alternate" type="application/rss+xml" title="{{ .Site.Params.inc.title }}" />
+    <meta name="title" content="{{ .BaseUrl }}">
+    <link rel="canonical" href="{{ .BaseUrl }}">
     <meta property="og:title" content="{{ .Site.Params.inc.title }}"/>
-    <meta property="og:url" content="{{ .Site.BaseUrl }}"/>
-    <meta property="og:image" content="{{ .Site.BaseUrl }}/images/{{ .Site.Params.inc.logo }}"/>   
+    <meta property="og:url" content="{{ .BaseUrl }}"/>
+    <meta property="og:image" content="{{ .BaseUrl }}/images/{{ .Site.Params.inc.logo }}"/>   
     <meta property="og:site_name" content="{{ .Site.Params.inc.title }}">
 </head>
 <body>
