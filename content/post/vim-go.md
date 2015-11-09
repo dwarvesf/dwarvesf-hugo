@@ -14,7 +14,7 @@ coverimage: blog-cover.jpg
 excerpt: "Vim là một text-editor khá mạnh, được sử dụng trong môi trường máy chủ không có giao diện đồ họa. Trong bài này mình sẽ hướng dẫn các bạn sử dụng Vim như một IDE dành cho Go"
 
 authorname: Lê Ngọc Thạch
-authorlink: http://runikikat.com
+authorlink: http://runikitkat.com
 authortwitter: runivn
 authorgithub: RuniVN
 authorbio: Unknown
