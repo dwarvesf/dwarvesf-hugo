@@ -1,0 +1,569 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Giới thiệu Unit Test trong Android &mdash; Dwarves Foundation</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/images/logo.png"/>
+    <link href="http://devblog.dwarvesf.com/index.xml" rel="alternate" type="application/rss+xml" title="Dwarves Foundation" />
+    <meta name="title" content="http://devblog.dwarvesf.com/">
+    <link rel="canonical" href="http://devblog.dwarvesf.com/">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Giới thiệu Unit Test trong Android"/>
+    <meta property="og:url" content="http://devblog.dwarvesf.com/post/android-unitest-introduce/"/>
+    <meta property="og:image" content="http://devblog.dwarvesf.com/images/2015-07-31-android-unitest-tutorial-1.png"/>   
+    <meta property="og:site_name" content="Dwarves Foundation">
+    <meta property="og:description" content="Bài viết giới thiệu về Unit Test trong Android và cách thực hiện">
+</head>
+<body>
+    
+<section class="site-nav">
+    <header>
+        <nav id="navigation">
+            <a class="brand" href="/">
+                <img src="/images/logo.png" alt="Inc">
+            </a>
+            <a href="/" class="home">Blog</a>
+            
+            <a href="http://dwarvesf.com/">About</a>
+        </nav>
+        <nav class="tagline">
+            
+            
+        </nav>
+    </header>
+</section>
+
+
+
+<div class="article-cover">
+    <div>
+        <img src="/images/2015-07-31-android-unitest-tutorial-1.png" class="image">
+    </div>
+</div>
+
+<article>
+
+    <div class="container">
+        <header>
+            <div class="meta">
+                By <address><a rel="author" href="https://www.facebook.com/namvu.bui" title="Nam Bùi Vũ" target="_blank">Nam Bùi Vũ</a></address> &mdash;
+                <time pubdate datetime="2015-07-31" title="2015-07-31">July 31, 2015</time>
+            </div>
+            <h1 class="title">Giới thiệu Unit Test trong Android</h1>
+            <h2 class="subtitle">Introduce Android Unit Test</h2>
+        </header>
+
+        <section>
+            
+
+<h2 id="tổng-quan:c1448c4f97d58f7a0ebda6cc028016d9">Tổng quan</h2>
+
+<p>Kiểm thử là một bước cần thiết để đảm bảo chất lượng khi xây dựng ứng dụng trên môi trường Android.</p>
+
+<p>Có nhiều loại kiểm thử có thể được tiến hành trên môi trường Android như:</p>
+
+<ul>
+<li>Unit Testing ( Kiểm thử đơn vị )</li>
+<li>Functional Testing ( Kiểm thử chức năng )</li>
+<li>Integration Testing ( Kiểm thử tích hợp )</li>
+</ul>
+
+<p>Trong bài viết này, tui sẽ giới thiệu tới các bạn cách tiến hành triển khai unit test trên Android bằng cách sử dụng Robolectric.</p>
+
+<h2 id="các-bước-chuẩn-bị:c1448c4f97d58f7a0ebda6cc028016d9">Các bước chuẩn bị</h2>
+
+<p>IDE: Android Studio version 1.2.
+Kiến thức nhất định về JUnit.</p>
+
+<h2 id="nhắc-lại-về-junit:c1448c4f97d58f7a0ebda6cc028016d9">Nhắc lại về JUnit</h2>
+
+<p>JUnit là một framework đơn giản thường được dùng để viết Unit Test trên môi trường Java.
+Các bạn có thể xem lại về JUnit ở:
+<a href="https://github.com/junit-team/junit/wiki">https://github.com/junit-team/junit/wiki</a></p>
+
+<p>Ở đây, tui chỉ nhắc những kiến thức có liên sẽ sử dụng trong unit testing trên Android để các bạn tiện theo dõi, gồm:</p>
+
+<ul>
+<li>Aggregating test in suites -  <a href="https://github.com/junit-team/junit/wiki/Aggregating-tests-in-suites">https://github.com/junit-team/junit/wiki/Aggregating-tests-in-suites</a></li>
+<li>Test Fixtures - <a href="https://github.com/junit-team/junit/wiki/Test-fixtures">https://github.com/junit-team/junit/wiki/Test-fixtures</a></li>
+<li>Assertions - <a href="https://github.com/junit-team/junit/wiki/Assertions">https://github.com/junit-team/junit/wiki/Assertions</a></li>
+</ul>
+
+<h2 id="giới-thiệu-về-robolectric:c1448c4f97d58f7a0ebda6cc028016d9">Giới thiệu về Robolectric</h2>
+
+<p>Robolectric là một framework cho phép bạn viết unit test và chạy chúng trên môi trường JVM mà không cần chạy ứng dụng Android một cách trực tiếp trên thiết bị.</p>
+
+<p>URL trang chủ: <a href="http://robolectric.org">http://robolectric.org</a></p>
+
+<p>Robolectric được viết dựa trên framework JUnit 4.</p>
+
+<h2 id="sử-dụng-robolectric-trong-android-studio:c1448c4f97d58f7a0ebda6cc028016d9">Sử dụng Robolectric trong Android Studio</h2>
+
+<p>Bây giờ, tui sẽ tạo và viết một ứng dụng Android đơn giản có sử dụng unit test bằng IDE Android Studio.
+Tui tạo một project android có tên là robolectric-example
+Cấu trúc project sau khi tạo xong:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-07-31-android-unitest-tutorial-2.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Để sử dụng robolectric, trước tiên cần mở file build.gradle và chỉnh sửa dependencies vào như sau:</p>
+
+<pre><code>dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.easytesting:fest:1.0.16'
+    testCompile 'com.squareup:fest-android:1.0.8'
+    testCompile('org.robolectric:robolectric:3.0-rc2') {
+        exclude group: 'commons-logging', module: 'commons-logging'
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+}
+</code></pre>
+
+<p>Sau khi chỉnh sửa file build.gradle, tiến hành sync project để get các package liên quan về:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-07-31-android-unitest-tutorial-3.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Các file java dùng cho viết unit test thường được lưu trong thư mục src/test/java/package_name như hình sau:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-07-31-android-unitest-tutorial-4.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Các file Test nên có đuôi “Test” ở cuối tên ( ví dụ: MainActivityTest.java)</p>
+
+<p>Để chạy được unit test sử dụng Robolectric, với mỗi file java tạo ra để chạy kiểm thử, bạn cần thêm annotation <code>@RunWith(RobolectricGradleTestRunner.class)</code>. Một việc nữa cần làm là cấu hình môi trường chạy kiểm thử thong qua annotation <code>@Config()</code></p>
+
+<p>Ví dụ, tôi cấu hình cho file <code>MainActivityTest.java</code> chạy unit test sử dụng Robolectric:</p>
+
+<pre><code>package com.example.nambv.robolectric_example;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
+
+import static org.fest.assertions.api.ANDROID.assertThat;
+
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, emulateSdk = 21)
+public class MainActivityTest {
+
+    private MainActivity mActivity;
+
+    @Before
+    public void setUp() throws Exception {
+        // setup
+        mActivity = Robolectric.buildActivity(MainActivity.class).create().get();
+    }
+
+    @Test
+    public void myActivityAppearsAsExpectedInitially() throws Exception {
+        // test
+        assertThat(mActivity.mClickMeButton).hasText(&quot;Click Me!&quot;);
+        assertThat(mActivity.mHelloWorldTextView).hasText(&quot;Hello world!&quot;);
+    }
+
+    @Test
+    public void clickingClickMeButtonChangesHelloWorldText() throws Exception {
+        assertThat(mActivity.mHelloWorldTextView).hasText(&quot;Hello world!&quot;);
+        mActivity.mClickMeButton.performClick();
+        assertThat(mActivity.mHelloWorldTextView).hasText(&quot;You clicked on button!&quot;);
+    }
+
+}
+</code></pre>
+
+<ul>
+<li>Lưu ý: Tất cả các phương thức được implement để chạy unit test phải được khai báo ở dạng public.</li>
+</ul>
+
+<p>Để chạy được unit test này, tui định nghĩa một TextView và một Button ở MainActivity như sau:
+File <code>MainActivity.java</code>:</p>
+
+<pre><code>public class MainActivity extends Activity {
+
+    Button mClickMeButton;
+    TextView mHelloWorldTextView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mClickMeButton = (Button) findViewById(R.id.btn_click_me);
+        mHelloWorldTextView = (TextView) findViewById(R.id.tv_hello_world);
+
+        mClickMeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mHelloWorldTextView.setText(&quot;You clicked on button!&quot;);
+            }
+        });
+    }
+}
+</code></pre>
+
+<p>File <code>activity_main.xml</code>:</p>
+
+<pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:paddingLeft=&quot;@dimen/activity_horizontal_margin&quot;
+    android:paddingRight=&quot;@dimen/activity_horizontal_margin&quot;
+    android:paddingTop=&quot;@dimen/activity_vertical_margin&quot;
+    android:paddingBottom=&quot;@dimen/activity_vertical_margin&quot;
+    android:orientation=&quot;vertical&quot;
+    tools:context=&quot;.MainActivity&quot;&gt;
+
+    &lt;TextView
+        android:id=&quot;@+id/tv_hello_world&quot;
+        android:text=&quot;@string/hello_world&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot; /&gt;
+
+    &lt;Button
+        android:id=&quot;@+id/btn_click_me&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;@string/click_me&quot;/&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre>
+
+<p>File <code>values/strings.xml</code>:</p>
+
+<pre><code>&lt;resources&gt;
+    &lt;string name=&quot;app_name&quot;&gt;robolectric-example&lt;/string&gt;
+
+    &lt;string name=&quot;hello_world&quot;&gt;Hello world!&lt;/string&gt;
+    &lt;string name=&quot;click_me&quot;&gt;Click Me!&lt;/string&gt;
+    &lt;string name=&quot;action_settings&quot;&gt;Settings&lt;/string&gt;
+&lt;/resources&gt;
+</code></pre>
+
+<p>Kịch bản test ở đây là, ban đầu TextView hiển thị nội dung là <code>“Hello world!”</code>, khi tui click vào button <code>“Click Me!”</code>, TextView sẽ cập nhật nội dung thành <code>“You clicked on button!”</code>.</p>
+
+<p>Chúng ta tiến hành xem lại các phương thức đã được implement ở file :
+Trước tiên, tui khởi tạo một đối tượng <code>MainActivity</code> kiểu <code>private</code> và chưa gán giá trị:</p>
+
+<pre><code>private MainActivity mActivity;
+</code></pre>
+
+<p>Tiếp theo, tui viết phương thức <code>setUp()</code> và cho <code>throw Exception</code> nếu  phương thức này không chạy được và có lỗi xảy ra. Lưu ý phương thức này có gắn annotation là <code>@Before</code>, tức là nó sẽ được chạy trước khi chạy các  phương thức có gắn annotations là <code>@Test</code>. Phương thức này thường được dùng để khai báo, định nghĩa các dữ liệu cần thiết trước khi tiến hành kiểm thử.
+Lưu ý: Phương thức được gắn annotation <code>@Before</code> sẽ được gọi trước mỗi lần chạy một unit test</p>
+
+<pre><code>@Before
+public void setUp() throws Exception {
+    // setup
+    mActivity = Robolectric.buildActivity(MainActivity.class).create().get();
+}
+</code></pre>
+
+<p>Ở đây, tui tiến hành tạo và gán giá trị cho đối tượng mActivity để chắc rằng đối tượng mActivity có giá trị khác null trước khi tiến hành kiểm thử</p>
+
+<p>Các phương thức được viết để chạy unit test sẽ được gắn annotation là <code>@Test</code>.
+Tiếp theo là phương thức chạy kiểm thử xem MainActivity mà tui đã khởi tạo ban đầu có chạy đúng như mong đợi của tui không. Nếu không, <code>throw Exception</code> và thông báo lỗi:</p>
+
+<pre><code>@Test
+public void myActivityAppearsAsExpectedInitially() throws Exception {
+    // Check if button mClickMeButton has text = &quot;Click Me!&quot; or not
+    assertThat(mActivity.mClickMeButton).hasText(&quot;Click Me!&quot;);
+    // Check if text view mHelloWorldTextView has text = &quot;Hello world!&quot; or not
+    assertThat(mActivity.mHelloWorldTextView).hasText(&quot;Hello world!&quot;);
+}
+</code></pre>
+
+<p>Tui viết thêm một unit test nữa để kiểm tra xem kết quả mong đợi khi thực hiện việc click vào button để so sánh kết quả trả về và kết quả mong đợi:</p>
+
+<pre><code>@Test
+public void clickingClickMeButtonChangesHelloWorldText() throws Exception {
+    // Text view before click
+    assertThat(mActivity.mHelloWorldTextView).hasText(&quot;Hello world!&quot;);
+    // Perform click action
+    mActivity.mClickMeButton.performClick();
+    // Text view after click
+    assertThat(mActivity.mHelloWorldTextView).hasText(&quot;You clicked on button!&quot;);
+}
+</code></pre>
+
+<p>Việc chuẩn bị đã xong, thứ tự chạy của unit test sẽ được gọi như sau:</p>
+
+<pre><code>setUp()
+myActivityAppearsAsExpectedInitially()
+setUp()
+clickingClickMeButtonChangesHelloWorldText()
+</code></pre>
+
+<p>Để tiến hành chạy các Unit Test trên, trước tiên bạn vào Build Variants, và chỉnh Test Artifact thành Unit Tests:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-07-31-android-unitest-tutorial-5.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Sau đó, bạn right-click vào package trong thư mục <code>src/test</code> và chọn Run:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-07-31-android-unitest-tutorial-6.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Android Studio tiến hành chạy kiểm thử:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-07-31-android-unitest-tutorial-7.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Kết quả chạy unit test là SUCESSFUL, tức là expected result đúng với actual result:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-07-31-android-unitest-tutorial-8.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Ngoài ra, bạn có thể xem kết quả chạy unit test trên web  bằng cách mở file <code>index.html</code> trong folder <code>build/reports/tests/debug</code>:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-07-31-android-unitest-tutorial-9.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Nội dung file <code>index.html</code>:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-07-31-android-unitest-tutorial-10.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Bây giờ, tui sẽ tiến hành cho unit test chạy failed trong case thứ hai, bằng cách chỉnh sửa lại nội dung text view tui expect sau khi nhấn vào button “Click Me!”</p>
+
+<pre><code>@Test
+public void clickingClickMeButtonChangesHelloWorldText() throws Exception {
+    // Text view before click
+    assertThat(mActivity.mHelloWorldTextView).hasText(&quot;Hello world!&quot;);
+    // Perform click action
+    mActivity.mClickMeButton.performClick();
+    // Text view after click
+    assertThat(mActivity.mHelloWorldTextView).hasText(&quot;Wrong content!&quot;);
+}
+</code></pre>
+
+<p>Tiến hành chạy lại unit test:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-07-31-android-unitest-tutorial-11.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Kết quả cho thấy có 1 unit test bị failed, mở lại file index.html ta sẽ thấy kết quả như sau:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-07-31-android-unitest-tutorial-12.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Nhấn vào test case bên dưới Failed tests, sẽ thấy lỗi sai của test case này:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-07-31-android-unitest-tutorial-13.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Kết quả mong đợi trong test case là “Wrong content!” trong khi kết quả khi chạy lại là “You clicked on button!” nên test case này bị failed và throw exception.</p>
+
+<p>Source code sample các bạn có thể lấy về ở <a href="https://github.com/dwarvesf/robolectric-example">https://github.com/dwarvesf/robolectric-example</a></p>
+
+<h2 id="conclusion:c1448c4f97d58f7a0ebda6cc028016d9">Conclusion</h2>
+
+<p>Trên đây, tui đã giới thiệu với các bạn một ví dụ đơn giản để chạy unit test trên Android. Hy vọng bài viết giúp ích cho các bạn trong việc xây dựng và kiểm thử ứng dụng trên môi trường Android. Cảm ơn các bạn đã theo dõi, hẹn gặp lại trong các bài viết kế tiếp về Testing trên Android.</p>
+
+            
+
+<div class="social">
+    <div>
+        <a href="http://news.ycombinator.com/submit" class="hn-share-button">Vote on HN</a>
+    </div>
+    <div>
+        <a href="https://twitter.com/share" class="twitter-share-button"  data-related="dwarvesf" data-text="Giới thiệu Unit Test trong Android - Introduce Android Unit Test">Tweet</a>
+    </div>
+    <div>
+        <div class="fb-like" data-width="150" data-layout="button_count" data-action="like" data-show-faces="true" data-send="false"></div>
+    </div>
+</div>
+
+        </section>
+
+        <footer>
+            <address>
+               <img src="/images/inhel.png">
+                <p>Written by <strong><a rel="author" href="https://twitter.com/" title="Nam Bùi Vũ" target="_blank">Nam Bùi Vũ</a></strong><br>
+                <span class="muted">Scouting Unit</span>
+                </p>
+            </address>
+
+        </footer>
+
+        
+        <section>
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//dwarvesf.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+        </section>
+        
+    </div>
+</article>
+
+<footer class="site-footer">
+    <div class="container">
+        <nav>
+            <a href="http://devblog.dwarvesf.com/">Dwarves Foundation</a> &middot;
+            <a href="/">Blog</a> &middot;
+            
+            <a href="http://dwarvesf.com/">About</a>
+        </nav>
+        
+        <nav class="social">
+            
+            <a href="https://twitter.com/dwarvesf" title="Follow on Twitter" target="_blank"><i class="icon icon-twitter black"></i></a>
+            
+            
+            <a href="https://github.com/dwarvesf" title="Follow on Github" target="_blank"><i class="icon icon-github black"></i></a>
+            
+            
+            <a href="http://facebook.com/dwarvesf" title="Follow on Facebook" target="_blank"><i class="icon icon-facebook black"></i></a>
+                
+            <a href="/index.xml" title="RSS Feed">
+                <i class="icon icon-rss black"></i>
+            </a>
+        </nav>
+    </div>
+</footer>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<div id="fb-root"></div>
+
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=1526296360976332";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>
+    (function(d, t) {
+        var g = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        g.src = '//hnbutton.appspot.com/static/hn.min.js';
+        s.parentNode.insertBefore(g, s);
+    }(document, 'script'));
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58452796-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+  
+
+</body>
+</html>
+

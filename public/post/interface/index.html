@@ -1,0 +1,407 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Giới thiệu Interface trong GoLang &mdash; Dwarves Foundation</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/images/logo.png"/>
+    <link href="http://devblog.dwarvesf.com/index.xml" rel="alternate" type="application/rss+xml" title="Dwarves Foundation" />
+    <meta name="title" content="http://devblog.dwarvesf.com/">
+    <link rel="canonical" href="http://devblog.dwarvesf.com/">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Giới thiệu Interface trong GoLang"/>
+    <meta property="og:url" content="http://devblog.dwarvesf.com/post/interface/"/>
+    <meta property="og:image" content="http://devblog.dwarvesf.com/images/2015-01-25-hugo-cover.png"/>   
+    <meta property="og:site_name" content="Dwarves Foundation">
+    <meta property="og:description" content="Trong bài này mình sẽ trình bày những gì mình tìm hiểu được về interface trong Go, khái niệm, khai báo cũng như cách sử dụng và một vài ví dụ thực tế.">
+</head>
+<body>
+    
+<section class="site-nav">
+    <header>
+        <nav id="navigation">
+            <a class="brand" href="/">
+                <img src="/images/logo.png" alt="Inc">
+            </a>
+            <a href="/" class="home">Blog</a>
+            
+            <a href="http://dwarvesf.com/">About</a>
+        </nav>
+        <nav class="tagline">
+            
+            
+        </nav>
+    </header>
+</section>
+
+
+
+<div class="article-cover">
+    <div>
+        <img src="/images/2015-01-25-hugo-cover.png" class="image">
+    </div>
+</div>
+
+<article>
+
+    <div class="container">
+        <header>
+            <div class="meta">
+                By <address><a rel="author" href="http://runikikat.com" title="Lê Ngọc Thạch" target="_blank">Lê Ngọc Thạch</a></address> &mdash;
+                <time pubdate datetime="2015-09-10" title="2015-09-10">September 10, 2015</time>
+            </div>
+            <h1 class="title">Giới thiệu Interface trong GoLang</h1>
+            <h2 class="subtitle">Interface trong Go và cách sử dụng</h2>
+        </header>
+
+        <section>
+            
+
+<ul>
+<li>Trong bài này mình sẽ trình bày những gì mình tìm hiểu được về interface trong Go, khái niệm, khai báo cũng như cách sử dụng và một vài ví dụ thực tế.</li>
+</ul>
+
+<h2 id="khái-niệm:a38e724b1dfc1725327e2aea22a2a689">Khái niệm</h2>
+
+<p>Interface là một dạng wrapper các khai báo hàm(chỉ là tên của hàm) ở mức độ prototype. Các hàm này sẽ được định nghĩa ở các lớp dẫn xuất, mỗi lớp dẫn xuất sẽ có cách định nghĩa lại hàm khác nhau tương ứng với mục đích sử dụng</p>
+
+<h2 id="khai-báo:a38e724b1dfc1725327e2aea22a2a689">Khai báo</h2>
+
+<p>Một interface với hàm SayYourName() trả về một string được khai báo như sau:</p>
+
+<pre><code>type Hello interface{
+	SayYourName() string 
+}
+</code></pre>
+
+<h2 id="cách-sử-dụng:a38e724b1dfc1725327e2aea22a2a689">Cách sử dụng</h2>
+
+<p>Interface trong Go follow concept Duck typing như sau:</p>
+
+<pre><code>When I see a bird that walks like a duck and swims like a duck and quacks like a duck, I call that bird a duck.
+</code></pre>
+
+<p>Có nghĩa là nếu một con nào có thể đi như con vịt, bơi như con vịt và quạc quạc như con vịt thì tôi gọi đó là con vịt.</p>
+
+<p>Mình sẽ đưa một ví dụ cụ thể. Mình có struct User, struct này có một hàm SayYourName()</p>
+
+<pre><code>
+type User struct {
+	FirstName, LastName string
+}
+
+func (u *User) SayYourName() string {
+	return fmt.Sprintf(&quot;%s %s&quot;, u.FirstName, u.LastName)
+}
+</code></pre>
+
+<p>Một hàm có param là interface Hello và trả về một string</p>
+
+<pre><code>func Greet(n Hello) string {
+	return fmt.Sprintf(&quot;Dear %s&quot;, n.SayYourName())
+}
+</code></pre>
+
+<p>Ở đây, hàm Greet nhận vào một param là interface Hello, và nó cũng chấp nhận <b>bất cứ param nào nếu nó có hàm SayYourName</b>.<br />
+Thử chạy chương trình:</p>
+
+<pre><code>func main() {
+	u := &amp;User{&quot;Runi&quot;, &quot;Lazy&quot;}
+	fmt.Println(Greet(u))
+}
+</code></pre>
+
+<p>Thật vậy ta có, kết quả &ldquo;Dear Runi Lazy&rdquo;</p>
+
+<p>Chú ý là param truyền vào hàm Greet phải là những đối tượng có thể có chứa các hàm của riêng đối tượng đó, nhưng bắt buộc phải có  <b>tất cả</b> những hàm của interface Hello. Giả sử thêm vào interface này một hàm Goodbye():</p>
+
+<pre><code>type Hello interface{
+	SayYourName() string 
+	Goodbye() string
+}
+</code></pre>
+
+<p>Kết quả ta bị báo lỗi như sau:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/interfacewrong.png"  />
+    
+    
+</figure>
+
+</p>
+
+<h2 id="sử-dụng-interface-trong-go:a38e724b1dfc1725327e2aea22a2a689">Sử dụng Interface trong Go</h2>
+
+<p>Ngoài interface có chứa khai báo hàm, interface còn một khái niệm là empty interface, hay interface{}.
+Interface này không có hàm, cũng có nghĩa là tất cả các loại variables hay struct&hellip; đều có thể thoả mãn làm param cho hàm nhận vào empty interface.</p>
+
+<pre><code>func DoSomething(v interface{}) {
+   // ...
+}
+//Hàm này nhận vào bất cứ loại param nào.
+</code></pre>
+
+<p>Như vậy ta có thể sử dụng empty interface cho các hàm nào mà param truyền vào vẫn chưa xác định cụ thể. Khi vào trong hàm thì tuỳ trường hợp sẽ có các cách tuỳ biến để convert về giá trị chúng ta cần.</p>
+
+<p>Ví dụ, ta có hàm PrintAll nhận vào một mảng giá trị empty interface.</p>
+
+<pre><code>func PrintAll(vals []interface{}) {
+    for _, val := range vals {
+        fmt.Println(val)
+    }
+}
+
+</code></pre>
+
+<p>Trong hàm main ta tiến hành convert:</p>
+
+<pre><code>
+func main() {
+    names := []string{&quot;stanley&quot;, &quot;david&quot;, &quot;oscar&quot;}
+    vals := make([]interface{}, len(names))
+    for i, v := range names {
+        vals[i] = v
+    }
+    PrintAll(vals)
+}
+
+</code></pre>
+
+<p>Một ví dụ khác, mình sưu tầm từ blog <a href="http://jordanorelli.com/post/32665860244/how-to-use-interfaces-in-go">how to use interface in Go</a>:<br />
+Khi nhận response từ Twitter API thì date time có dạng timestamp như sau:</p>
+
+<pre><code>&quot;Thu May 31 00:00:01 +0000 2012&quot;
+</code></pre>
+
+<p>Dưới dây là một hàm dùng để in ra kiểu của timeStamp khi nhận từ response:</p>
+
+<pre><code>var input = `
+{
+    &quot;created_at&quot;: &quot;Thu May 31 00:00:01 +0000 2012&quot;
+}
+`
+
+func main() {
+    var val map[string]interface{}
+
+    if err := json.Unmarshal([]byte(input), &amp;val); err != nil {
+        panic(err)
+    }
+
+    fmt.Println(val)
+    for k, v := range val {
+        fmt.Println(k, reflect.TypeOf(v))
+    }
+}
+</code></pre>
+
+<p>Chạy hàm trên ta được :</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/returntwitter.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Hum.. timeStamp mà lại kiểu string thì chưa hợp lý lắm, thử parse lại về trực tiếp kiểu time.Time</p>
+
+<pre><code>    var val map[string]time.Time
+    if err := json.Unmarshal([]byte(input), &amp;val); err != nil {
+        panic(err)
+    }
+
+</code></pre>
+
+<p>Thử chạy lại:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/panicinterface.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Lỗi này xảy ra vì không thể parse chuỗi kia về time.Time được (Twitter API được viết bằng Ruby, cách parse sẽ khác với Go).<br />
+Vậy chúng ta thử viết lại hàm parse chuỗi. Ta có interface Unmarshal, được lấy từ <a href="http://golang.org/pkg/encoding/json/#Unmarshaler">Encode Json Package</a></p>
+
+<pre><code>type Unmarshaler interface {
+    UnmarshalJSON([]byte) error
+}
+</code></pre>
+
+<p>Ta cần viết lại hàm UnmarshalJSON để có thể parse về timeStamp(sử dụng RubyDate)</p>
+
+<pre><code>type Timestamp time.Time
+
+func (t *Timestamp) UnmarshalJSON(b []byte) error {
+     v, err := time.Parse(time.RubyDate, string(b[1:len(b)-1]))
+    if err != nil {
+        return err
+    }
+    *t = Timestamp(v)
+    return nil
+}
+
+</code></pre>
+
+<p>Khi đó, hàm main sẽ được viết lại như sau:</p>
+
+<pre><code>func main() {
+	var val map[string]Timestamp
+
+	if err := json.Unmarshal([]byte(input), &amp;val); err != nil {
+		panic(err)
+	}
+
+	fmt.Println(val)
+	for k, v := range val {
+		fmt.Println(k, reflect.TypeOf(v))
+	}
+}
+</code></pre>
+
+<p>Chạy chương trình ta được kết quả:
+
+<figure class="third right">
+    
+        <img src="/images/interfacetimestamp.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>Như vậy chúng ta đã vừa tạo một đối tượng có hàm UnmarshalJSON để có thể truyền vào hàm json.Unmarshal trong package encoding/json nhờ đó có được kết quả mong muốn.</p>
+
+<h2 id="lời-kết:a38e724b1dfc1725327e2aea22a2a689">Lời kết</h2>
+
+<p>Trên đây là những gì mình tìm hiểu được trong quá trình sử dụng interface trong Go. Interface là một trong những kĩ thuật đặc trưng của Go, mong nhận được ý kiến đóng góp từ các bạn.
+Nếu có điều gì muốn trao đổi, liên hệ qua mail thach@dwarvesf.com với mình nha.</p>
+
+            
+
+<div class="social">
+    <div>
+        <a href="http://news.ycombinator.com/submit" class="hn-share-button">Vote on HN</a>
+    </div>
+    <div>
+        <a href="https://twitter.com/share" class="twitter-share-button"  data-related="dwarvesf" data-text="Giới thiệu Interface trong GoLang - Interface trong Go và cách sử dụng">Tweet</a>
+    </div>
+    <div>
+        <div class="fb-like" data-width="150" data-layout="button_count" data-action="like" data-show-faces="true" data-send="false"></div>
+    </div>
+</div>
+
+        </section>
+
+        <footer>
+            <address>
+               <img src="/images/gancho.png">
+                <p>Written by <strong><a rel="author" href="https://twitter.com/runivn" title="Lê Ngọc Thạch" target="_blank">Lê Ngọc Thạch</a></strong><br>
+                <span class="muted">Unknown</span>
+                </p>
+            </address>
+
+        </footer>
+
+        
+        <section>
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//dwarvesf.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+        </section>
+        
+    </div>
+</article>
+
+<footer class="site-footer">
+    <div class="container">
+        <nav>
+            <a href="http://devblog.dwarvesf.com/">Dwarves Foundation</a> &middot;
+            <a href="/">Blog</a> &middot;
+            
+            <a href="http://dwarvesf.com/">About</a>
+        </nav>
+        
+        <nav class="social">
+            
+            <a href="https://twitter.com/dwarvesf" title="Follow on Twitter" target="_blank"><i class="icon icon-twitter black"></i></a>
+            
+            
+            <a href="https://github.com/dwarvesf" title="Follow on Github" target="_blank"><i class="icon icon-github black"></i></a>
+            
+            
+            <a href="http://facebook.com/dwarvesf" title="Follow on Facebook" target="_blank"><i class="icon icon-facebook black"></i></a>
+                
+            <a href="/index.xml" title="RSS Feed">
+                <i class="icon icon-rss black"></i>
+            </a>
+        </nav>
+    </div>
+</footer>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<div id="fb-root"></div>
+
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=1526296360976332";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>
+    (function(d, t) {
+        var g = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        g.src = '//hnbutton.appspot.com/static/hn.min.js';
+        s.parentNode.insertBefore(g, s);
+    }(document, 'script'));
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58452796-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+  
+
+</body>
+</html>
+
