@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Intro Go Hugoconcurrency on </title>
+    <link>http://localhost:1313/categories/intro-go-hugoconcurrency/</link>
+    <description>Recent content in Intro Go Hugoconcurrency on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 15 Sep 2015 13:09:56 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/intro-go-hugoconcurrency/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Concurrency trong Go Lang</title>
+      <link>http://localhost:1313/post/concurrency/</link>
+      <pubDate>Tue, 15 Sep 2015 13:09:56 +0700</pubDate>
+      
+      <guid>http://localhost:1313/post/concurrency/</guid>
+      <description>
+
+&lt;ul&gt;
+&lt;li&gt;Concurrency trong Go được đánh giá là một trong những đặc điểm nổi bật nhất của Go. Trong bài này mình sẽ trình bày một số khái niệm căn bản và đưa ra vài ví dụ của concurrency trong Go.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;tổng-quan:3a49f596dc00652ac1424563ccdd3a3f&#34;&gt;Tổng quan&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Concurrency trong một chương trình là khi chúng ta cho phép chạy nhiều hơn một công việc(task) một cách đồng thời.&lt;/li&gt;
+&lt;li&gt;Concurrency không phải là Parallelism&lt;/li&gt;
+&lt;li&gt;Cocurrency có vào hai khái niệm cơ bản: goroutines và channels&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;chi-tiết:3a49f596dc00652ac1424563ccdd3a3f&#34;&gt;Chi tiết&lt;/h2&gt;
+
+&lt;p&gt;Chúng ta sẽ đi vào từng phần của Concurrency trong Go.&lt;/p&gt;
+
+&lt;h4 id=&#34;goroutines:3a49f596dc00652ac1424563ccdd3a3f&#34;&gt;Goroutines&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Một goroutine là một hàm mà có thể chạy đồng thời với các hàm khác.&lt;/li&gt;
+&lt;li&gt;Goroutines được xem như như thread nhưng nhẹ hơn, tuy nhiên nó không phải là một tiến trình(process) hay là thread của hệ thống(OS).&lt;/li&gt;
+&lt;li&gt;Lý thuyết hoạt động goroutines dựa trên sự chia sẻ vùng nhớ.&lt;/li&gt;
+&lt;li&gt;Sử dụng bằng cách thêm keyword &amp;ldquo;go&amp;rdquo; trước một hàm.
+Ví dụ:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;func say(s string) {
+    for i := 0; i &amp;lt; 5; i++ {
+        time.Sleep(100 * time.Millisecond)
+        fmt.Println(s)
+    }
+}
+
+func main() {
+    say(&amp;quot;world&amp;quot;)
+    say(&amp;quot;hello&amp;quot;)
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Chạy chương trình này ta có sẽ có kết quả:&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;third right&#34;&gt;
+    
+        &lt;img src=&#34;http://localhost:1313/images/routine1.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+Sở dĩ có kết quả này là do hàm say(&amp;ldquo;world&amp;rdquo;) chạy xong mới tới hàm say(&amp;ldquo;hello&amp;rdquo;) được chạy.
+Bây giờ ta sửa hàm main lại như sau&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+func main() {
+    go say(&amp;quot;world&amp;quot;)
+    say(&amp;quot;hello&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hàm say với keyword go đứng trước sẽ chạy cùng lúc với hàm say không có keyword go. Ta được kết quả:&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;third right&#34;&gt;
+    
+        &lt;img src=&#34;http://localhost:1313/images/routine2.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;
+
+&lt;p&gt;Goroutines rất rẻ. Một goroutine được tạo ra chỉ tốn 2KB trong stack, và khi chạy xong bị huỷ bởi runtime. Chúng ta có thể sử dụng goroutines thoải mái mà không phải lo nghĩ về việc tốn kém bộ nhớ.
+Chúng ta có thể define số goroutines chạy cùng lúc tối đa bằng khai báo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export GOMAXPROCS=100
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Một chương trình chạy có thể có một hoặc nhiều goroutines.
+Tuy nhiên hàm main lại đặc biệt hơn. Khi hàm main() exit, tất cả các goroutines lập tức bị terminate.
+Ví dụ&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;func main(){
+
+  go func(){
+    fmt.Println(&amp;quot;Hello&amp;quot;)
+  }()
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Chương trình này sẽ không cho ra kết quả gì, vì hàm anonymous trên sẽ không được thực hiện. Hàm main() exit trước, và goroutine bị terminate.
+Nếu chúng ta sử dụng một cách khác:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;func main(){
+
+  go func(){
+    fmt.Println(&amp;quot;Hello&amp;quot;)
+  }()
+  time.Sleep(time.Second*5)
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Chương trình sẽ cho ra kết quả là in ra Hello. Chúng ta buộc hàm goroutine phải chạy, trong trường hợp này là làm chậm quá trình kết thúc của hàm main một vài giây.&lt;/p&gt;
+
+&lt;p&gt;Nhưng với một hàm main mà có lệnh Sleep trong một vài giây sẽ gây khó hiểu và code không đẹp đẽ lắm.
+Từ đó sinh ra một khái niệm mới: WaitGroup.&lt;/p&gt;
+
+&lt;p&gt;Một WaitGroup sẽ chờ một tập hợp goroutines kết thúc. Hàm goroutines chính sẽ thêm số goroutines mà nó muốn chờ, mỗi hàm goroutine khi chạy xong sẽ gọi Done(). Cho tới khi mà các goroutines chưa được chạy xong, thì waitgroup sẽ block chương trình tại thời điểm đó.&lt;/p&gt;
+
+&lt;p&gt;Sử dụng WaitGroup:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+func main() {
+    var message []int
+    var wg sync.WaitGroup //tạo instance
+
+    wg.Add(3) // Thêm 3 goroutines vào danh sách muốn đợi
+    go func() {
+        defer wg.Done() // sau khi chạy 2 lệnh dưới xong sẽ kết thúc,
+                        // trả về done cho wg
+        time.Sleep(time.Second * 3)
+        messages[0] = 1
+    }()
+    go func() {
+        defer wg.Done()
+        time.Sleep(time.Second * 2)
+        messages[1] = 2
+    }()
+    go func() {
+        defer wg.Done()
+        time.Sleep(time.Second * 1)
+        messages[2] = 3
+    }()
+    go func() {
+        for i := range messages {
+            fmt.Println(i)
+        }
+    }()
+
+    wg.Wait() // chừng nào chưa chạy xong chưa chạy xong 3 hàm trên,
+              // block chương trình.
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Chúng ta có thể hiểu như sau: Khi wg(WaitGroup) Add n goroutines để đợi, với mỗi goroutine chạy xong, wg sẽ giảm đi 1. Hàm wg.Wait() chỉ được chạy qua khi và chỉ khi wg có số goroutines để đợi bằng 0.&lt;/p&gt;
+
+&lt;p&gt;Thử viết lại hàm lúc nãy bằng waitgroup:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  var wg sync.WaitGroup
+  wg.Add(1)
+  go func() {
+    defer wg.Done()
+    fmt.Println(&amp;quot;Hello&amp;quot;)
+  }()
+  wg.Wait()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Chúng ta được kết quả tương tự.&lt;/p&gt;
+
+&lt;h4 id=&#34;channel:3a49f596dc00652ac1424563ccdd3a3f&#34;&gt;Channel&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Channel sinh ra dùng để giao tiếp giữa 2 goroutines, bao gồm gửi và nhận dữ liệu.&lt;/li&gt;
+&lt;li&gt;Channel là reference type.&lt;/li&gt;
+&lt;li&gt;Về cơ bản, concept của channel là &amp;ldquo;typed pipes&amp;rdquo;. Nó tạo một đường ống liên kết giữa 2 goroutines, chúng ta có thể gửi các object phức tạp qua channel.&lt;/li&gt;
+&lt;li&gt;Channel có thể dùng cho synchronization.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;third right&#34;&gt;
+    
+        &lt;img src=&#34;http://localhost:1313/images/channels.jpg&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;
+
+&lt;p&gt;Sử dụng:
+Chúng ta tạo channel bằng &lt;b&gt;make&lt;/b&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;chInt := make(chan int)
+chQuacker := make(chan Quacker)
+// Quacker là interface
+// tất cả hàm nào implement hàm Quack() đều có thể làm việc với channel
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Channel sử dụng kí hiệu mũi tên hướng về bên trái.
+Để gửi data thông qua channel:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt; chanInt &amp;lt;- 3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Để nhận data từ channel&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; x := chanInt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Kiểm tra channel đóng&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; _, ok = &amp;lt;- c // ok bằng true nếu c còn mở
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Close một channel&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;close(c)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ví dụ:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+func main() {
+  a := hello(&amp;quot;A&amp;quot;)
+  b := hello(&amp;quot;B&amp;quot;)
+  for i := 0; i &amp;lt; 5; i++ {
+    fmt.Println(&amp;lt;-a) // lấy data từ channel
+    fmt.Println(&amp;lt;-b)
+  }
+}
+func hello(name string) chan string {
+  c := make(chan string) // tạo instance channel
+  go func() {
+    for {
+      c &amp;lt;- &amp;quot;Hello from&amp;quot; + name // gửi string vào channel
+      time.Sleep(100 * time.Millisecond)
+    }
+  }()
+  return c
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ta có kết quả:
+
+&lt;figure class=&#34;third right&#34;&gt;
+    
+        &lt;img src=&#34;http://localhost:1313/images/channel1.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;
+
+&lt;p&gt;Một lệnh send trên một channel sẽ block cho đến khi có một lệnh nhận có mặt trên cùng channel đó.&lt;/p&gt;
+
+&lt;p&gt;Ví dụ:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;func main(){
+  ch := make(chan int)
+  ch &amp;lt;- 42
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Trong hàm này chúng ta cố gắng gửi 42 vào ch, nhưng không có lệnh nhận, vì vậy sẽ gặp deadlock(block forever). Tương tự cho việc nhận từ một channel trong khi nó chưa được send&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;func main(){
+  ch := make(chan int)
+  recieved := &amp;lt;- 42
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Trong Go có khái niệm select, giống switch case nhưng chỉ dành cho channel:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;select{
+  case &amp;lt;- c1: // thử nhận giá trị từ channel c1
+  case x := &amp;lt;- c2 // thử nhận giá trị từ c2 và gán vào x
+  case c3 &amp;lt;- value  // thử gửi value vào c3
+  default:
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lưu ý:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Mỗi case phải là một expression nhận hoặc gửi&lt;/li&gt;
+&lt;li&gt;Tất cả các statement sẽ được duyệt qua. Nếu có một cái sẵn sàng, nó sẽ được chạy. Nếu nhiều cái cùng sẵn sàng, một case sẽ được chạy bằng cách random. Nếu không có cái nào, default sẽ được chạy.
+Ví dụ, để set timeout cho một lệnh gửi, nhận của channel&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;chInt := make(chan Int)
+select {
+ case i := &amp;lt;- chInt:
+      fmt.Println(&amp;quot;got int&amp;quot;,i)
+ case &amp;lt;- time.After(time.Second * 5):
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hàm trên có nghĩa là, chờ để nhận giá trị từ channel vào i, nhưng không quá 5s.&lt;/p&gt;
+
+&lt;h2 id=&#34;lời-kết:3a49f596dc00652ac1424563ccdd3a3f&#34;&gt;Lời kết&lt;/h2&gt;
+
+&lt;p&gt;Trên đây là những gì mình tìm hiểu được về concurrency trong Go - một trong những miracles trong Go.
+Nếu có điều gì muốn trao đổi, liên hệ qua mail thach@dwarvesf.com với mình nha.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

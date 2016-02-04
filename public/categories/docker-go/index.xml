@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker Go on </title>
+    <link>http://localhost:1313/categories/docker-go/</link>
+    <description>Recent content in Docker Go on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 04 Feb 2016 12:00:25 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/docker-go/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Docker với Microcontainers</title>
+      <link>http://localhost:1313/post/tiny-container/</link>
+      <pubDate>Thu, 04 Feb 2016 12:00:25 +0700</pubDate>
+      
+      <guid>http://localhost:1313/post/tiny-container/</guid>
+      <description>
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Khi sử dụng docker, bạn sẽ nhanh chóng nhận ra image dùng để chạy project chiếm 1 dung lượng không nhỏ. Một image ubuntu đơn thuần cũng đã sử dụng gần 200mb nhưng bạn lại không sử dụng hết các tool có sẵn của nó. Các image khác như node, go, &amp;hellip; cũng đa phần chạy trên nền ubuntu, debian và chỉ cài đặt thêm môi trường để bạn dễ dàng deploy hơn nhưng việc download 1 image mới trở nên tốn thời gian vì dung lượng quá lớn và có vẻ như không cần thiết.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Chính vì thế, tôi đã tìm ra được 1 image mà trong đó không có gì cả, theo đúng nghĩa đen là không có gì cả :D, trừ 1 số metadata được thêm vào bởi Docker.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;docker pull scratch
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Vì vậy, có thể nói, đây là Docker image có dung lượng nhỏ nhất.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;chúng-ta-sẽ-tìm-hiểu-cách-deploy-1-app-web-với-image-này-ngay-bây-giờ-d:ae448018aa58d317917706c6bc9942d4&#34;&gt;Chúng ta sẽ tìm hiểu cách deploy 1 app web với image này ngay bây giờ :D&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Tôi sẽ demo với beego web.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Tôi không thể compile app go trong image empty này vì nó không có Go complier. Và vì đang sử dụng Mac nên tôi không thể compile 1 Linux binary. (Thực tế là chúng ta hoàn toàn có thể cross-compile nhưng tôi sẽ không đề cập ở bài viết này. Bạn có thể tham khảo tại &lt;a target=&#34;_blank&#34; href=&#34;https://golang.org/doc/install/source#environment&#34;&gt;đây&lt;/a&gt;).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Vì thế tôi cần tạo 1 môi trường để compile và docker build source Go:&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run --rm -it -v &amp;quot;$GOPATH&amp;quot;:/go  -e &amp;quot;GOPATH=/go&amp;quot;  -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):$(which docker) golang bash
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Với lệnh ở trên, &lt;code&gt;--rm&lt;/code&gt; sẽ xóa container sau khi exit, &lt;code&gt;-v &amp;quot;$GOPATH&amp;quot;:/go&lt;/code&gt; share directory GOPATH của máy với container, &lt;code&gt;-e &amp;quot;GOPATH=/go&amp;quot;&lt;/code&gt;, &lt;code&gt;-v /var/run/docker.sock:/var/run/docker.sock&lt;/code&gt; dùng để chạy đc docker bên trong container (docker trong docker :D), &lt;code&gt;-v $(which docker):$(which docker)&lt;/code&gt; dùng để share command docker, golang là image môi trường để build Go binary và build image, bash để bắt đầu Bash session.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Lúc này, vì đã vào bên trong container nên tôi cd đến project &lt;code&gt;/go/src/git.dwarvesf.com/ivkean/web&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Tạo 1 Dockerfile với nội dung như sau:&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;# scratch
+FROM scratch
+
+WORKDIR /web
+
+# copy binary into image
+COPY web web
+
+# copy other necessary files
+COPY conf conf
+COPY static static
+COPY views views
+
+EXPOSE 8080
+
+ENTRYPOINT [&amp;quot;/web/web&amp;quot;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Build source bằng lệnh: &lt;code&gt;go build&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Và link library bằng: &lt;code&gt;CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o web .&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Build với docker: &lt;code&gt;docker build -t beego-web .&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;third right&#34;&gt;
+    
+        &lt;img src=&#34;http://localhost:1313/images/2016-02-04-tiny-container-docker-build.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Image vừa tạo chỉ chiếm dung lượng 17.5MB :D&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;third right&#34;&gt;
+    
+        &lt;img src=&#34;http://localhost:1313/images/2016-02-04-tiny-container-run-docker-images.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Khi đó, máy bạn đã có 1 image là beego-web, việc còn lại là:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;docker run -d -p 8080:8080 beego-web
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;figure class=&#34;third right&#34;&gt;
+    
+        &lt;img src=&#34;http://localhost:1313/images/2016-02-04-tiny-container-run-bee-web.png&#34;  /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Chúc các bạn thành công.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

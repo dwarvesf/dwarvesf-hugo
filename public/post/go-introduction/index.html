@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Giới thiệu về Go &mdash; Dwarves Foundation</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/images/logo.png"/>
+    <link href="http://localhost:1313/index.xml" rel="alternate" type="application/rss+xml" title="Dwarves Foundation" />
+    <meta name="title" content="http://localhost:1313/">
+    <link rel="canonical" href="http://localhost:1313/">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Giới thiệu về Go"/>
+    <meta property="og:url" content="http://localhost:1313/post/go-introduction/"/>
+    <meta property="og:image" content="http://localhost:1313/images/2015-01-28-golang-banner.png"/>   
+    <meta property="og:site_name" content="Dwarves Foundation">
+    <meta property="og:description" content=" Tui sẽ giới thiệu một ngôn ngữ còn khá lạ lẫm với người Việt, đó là Go - một ngôn ngữ lập trình Server-side được phát triển bởi Google.">
+</head>
+<body>
+    
+<section class="site-nav">
+    <header>
+        <nav id="navigation">
+            <a class="brand" href="/">
+                <img src="/images/logo.png" alt="Inc">
+            </a>
+            <a href="/" class="home">Blog</a>
+            
+            <a href="http://dwarvesf.com/">About</a>
+        </nav>
+        <nav class="tagline">
+            
+            
+        </nav>
+    </header>
+</section>
+
+
+
+<div class="article-cover">
+    <div>
+        <img src="/images/2015-01-28-golang-banner.png" class="image">
+    </div>
+</div>
+
+<article>
+
+    <div class="container">
+        <header>
+            <div class="meta">
+                By <address><a rel="author" href="https://www.facebook.com/namvu.bui" title="Nam Bùi Vũ" target="_blank">Nam Bùi Vũ</a></address> &mdash;
+                <time pubdate datetime="2015-01-28" title="2015-01-28">January 28, 2015</time>
+            </div>
+            <h1 class="title">Giới thiệu về Go</h1>
+            <h2 class="subtitle">Introduce Golang</h2>
+        </header>
+
+        <section>
+            
+
+<p>Tới thời điểm này, khá nhiều ngôn ngữ đã ra đời phục vụ việc lập trình cho phía Server-side như: PHP, Ruby on Rails, Python, NodeJs&hellip; Mỗi ngôn ngữ đều có những ưu khuyết điểm riêng. Ở đây, tui sẽ giới thiệu một ngôn ngữ còn khá lạ lẫm với người Việt, đó là Go - một ngôn ngữ lập trình Server-side được phát triển bởi Google.</p>
+
+<h2 id="giới-thiệu-go:f8019ab515cb984996d86c9fe8eb09ec">Giới thiệu Go</h2>
+
+<p>Go là một ngôn ngữ lập trình đồng thời (Concurrent Program) được Google giới thiệu lần đầu tiên vào nằm 2009. Go được các thành viên phát triển nói đến về một ngôn ngữ cho server, được phát triển cho cộng đồng trên nền C.</p>
+
+<p>Go được ví như C - rút gọn. Những gì bạn có thể viết được trên C, bạn có thể viết được trên Go với tốc độ nhanh hơn gấp 5 lần với khác biệt rất nhỏ. Có thể đối với những bạn thường lập trình trên C# hay Java thì Go nhìn có vẻ khá lạ lẫm, nhưng khi bạn đã làm quen dc với Go, bạn sẽ thấy Go khá thú vị và tốc độ lập trình rất nhanh (như tui đã đề cập trước đó)</p>
+
+<p>Một trong những điểm tui thích nhất ở Go là tốc độ xử lý. Trong khi C được đánh giá có tốc độ xử lý cực nhanh, thì Go chỉ bị C bỏ lại với khoảng cách rất gần! Trước khi nhìn vào benchmark của Go, tui sẽ giởi thiệu với các bạn các cú pháp syntax Go chuẩn, các kiểu dữ liệu cơ bản, và so sánh nó với C.</p>
+
+<h2 id="go-một-ngôn-ngữ-server-ngắn-gọn:f8019ab515cb984996d86c9fe8eb09ec">Go, một ngôn ngữ server ngắn gọn</h2>
+
+<p>Nói đến đây, bạn có thấy Go thú vị và hấp dẫn hơn một tẹo rồi phải không? Mong là vậy! Dù rồi hay chưa, tui sẽ tăng tính thuyết phục và đặc sắc của Go bằng cách cho bạn xem những syntax đẹp và so sánh nó với C!
+Thứ nhất, khai báo biến (variable) trong Go vô cùng ngắn gọn. Thay vì khai báo cụ thể kiểu dữ liệu của biến, Go có bộ tham chiếu kiểu dữ liệu (type inference) thực hiện việc gán kiểu và khởi tạo biến cho chúng ta. Để khai báo một biến đơn giản&hellip;
+Trong C:</p>
+
+<pre><code>int myVar = 33;
+</code></pre>
+
+<p>Trong Go:</p>
+
+<pre><code>myVar := 33
+</code></pre>
+
+<p>Ngắn gọn hơn C, bạn có thể thấy như thế! Không chỉ có thế, Go không đòi hỏi kết thúc câu lệnh bằng dấu “;”, trả về nhiều kết quả trong function, và có thể trả về cặp (pair) kết quả và lỗi cho bạn (result, err). Pair cũng là cách chuẩn để xử lý lỗi trong Go. Tôi sẽ đề cập kỹ hơn ở các bài viết về syntax trong Go.
+Hơn vậy, bạn có thể định nghĩa một biến bằng utf-8, một điều khá mới mẻ trong Go, ví dụ:
+<code>biếnSố := 33</code>
+Bây giờ, ta tiến hành xét một chương trình Hello World trong Go và C:</p>
+
+<p>helloworld.c</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+ 
+int main ()
+{
+  printf (&quot;Hello World!\n&quot;);
+}
+</code></pre>
+
+<p>helloworld.go</p>
+
+<pre><code>package main
+ 
+import (
+    &quot;fmt&quot;
+)
+ 
+func main() {
+    fmt.Println(&quot;Hello World!&quot;)
+}
+</code></pre>
+
+<p>Chúng ta có thể thấy được sự tương đồng giữa Go và C qua đoạn code trên
+Bạn sẽ thấy được Go ngắn gọn hơn C rõ ràng hơn khi bạn viết các chương trình lớn, phức tạp và cần xử lý đồng thời (concurrency). Có một bài blog so sánh C và Go, cũng như các chi tiết về những lợi thế về syntax của Go so với C: <a href="http://www.syntax-k.de/projekte/go-review">http://www.syntax-k.de/projekte/go-review</a>
+Tiếp theo. chúng ta sẽ so sánh khả năng chịu tải của Go để xem Go có thực sự chịu tải tốt đúng như tuyên bố của những lập trình viên hay không</p>
+
+<h2 id="khả-năng-chịu-tải-của-go:f8019ab515cb984996d86c9fe8eb09ec">Khả năng chịu tải của Go</h2>
+
+<p>Hãy nhìn cách Go chạy một loạt các chương trình đơn giản nhưng lặp đi lặp lại trong bảng dưới đây:</p>
+
+<p>
+<figure class="third right">
+    
+        <img src="/images/2015-01-28-go-vs-ruby.png"  />
+    
+    
+</figure>
+
+</p>
+
+<p>( Website test trực tuyến: <a href="http://benchmarksgame.alioth.debian.org/">http://benchmarksgame.alioth.debian.org/</a> )</p>
+
+<p>Như chúng ta thấy từ số liệu thống kê, Golang hiệu quả hơn Ruby rất nhiều!!! Trong chương trình đầu tiên - ‘fasta-redux’, Ruby mất 110 giây để thực thi xong, nhưng Go chỉ mất 1.79 giây. Nhanh hơn gấp gần 100 lần! Quá ấn tượng phải không!!!</p>
+
+<p>Go không chỉ ấn tượng về tốc độ xử lý, mà còn thuận lợi về xử lý đồng thời hơn hầu hết các ngôn ngữ server hiện giờ. Go sử dụng các Goroutines (tui sẽ nói rõ hơn về Goroutlines ở những bài viết sau).</p>
+
+<p>Go đã cung cấp được chúng ta một ngôn ngữ lập trình ở server với tốc độ cực nhanh, một cú pháp ngắn gọn, hằng trăm package mặc định hữu dụng, cơ chế xử lý đa luồng đồng thời, và vô số thư viện được phát triển bởi các lập trình viên trên khắp thế giới. Tất cả giúp chúng ta xây dựng website, server bằng Go một cách nhanh và hiệu quả nhất.</p>
+
+<h2 id="tóm-tắt:f8019ab515cb984996d86c9fe8eb09ec">Tóm tắt</h2>
+
+<p>Với tuổi đời còn khá non trẻ (từ 2009) so với những ngôn ngữ khác (C hơn 40 năm, C++ hơn 30 năm, Ruby khoảng 20 năm, Java cỡ 17 năm, C# tầm 10-12 năm&hellip;) thì 5 năm thực sự là khoảng thời gian không nhiều để ta so sánh những sản phẩm nổi bật được viết và phát hành bằng Go so với những ngôn ngữ khác. Tuy nhiên, Go đang được Google và cộng đồng lập trình viên tiếp tục phát triển và hoàn thiện. Tin vui là hiện nay, cộng đồng quan tâm đến Go trên thế giới không nhỏ!</p>
+
+<p>Cộng đồng Go lớn nhất hiện nay trên thế giới là <a href="http://blog.gopheracademy.com/"><code>Gopherarcademy</code></a>, bên cạnh đó còn có  <a href="http://go.meetup.com/"><code>GoMeetUp</code></a></p>
+
+<p>Một trong những event lớn về Go trong thời gian gần đây là ngày 23 - 25/01/2015 vừa qua, <a href="http://gophergala.com/"><code>GopherGala</code></a> đã đứng ra tổ chức sự kiện Hackathon đầu tiên cho Go trên toàn thế giới</p>
+
+<p>Go đang dần được chấp nhận và triển khai rộng rãi trên nhiều Startup và Công ty thương mại. Nhiều nhà cung cấp Saas/ Paas sử dụng Go trong dự án của họ. Dịch vụ gửi mail <a href="http://sendgrid.com/blog/convince-company-go-golang/"><code>SendGrid</code></a> cũng đang áp dụng Go để xây dựng hệ thống mạnh mẽ hơn, nhanh hơn và đáng tin cậy hơn!</p>
+
+<p>Túm cái váy lại, nếu bạn đang tìm kiếm một ngôn ngữ lập trình đồng thời, song song, đơn giản, sexy và tuyệt vời, hãy đến với Go!</p>
+
+            
+
+<div class="social">
+    <div>
+        <a href="http://news.ycombinator.com/submit" class="hn-share-button">Vote on HN</a>
+    </div>
+    <div>
+        <a href="https://twitter.com/share" class="twitter-share-button"  data-related="dwarvesf" data-text="Giới thiệu về Go - Introduce Golang">Tweet</a>
+    </div>
+    <div>
+        <div class="fb-like" data-width="150" data-layout="button_count" data-action="like" data-show-faces="true" data-send="false"></div>
+    </div>
+</div>
+
+        </section>
+
+        <footer>
+            <address>
+               <img src="/images/inhel.png">
+                <p>Written by <strong><a rel="author" href="https://twitter.com/" title="Nam Bùi Vũ" target="_blank">Nam Bùi Vũ</a></strong><br>
+                <span class="muted">Scouting Unit</span>
+                </p>
+            </address>
+
+        </footer>
+
+        
+        <section>
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//dwarvesf.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+        </section>
+        
+    </div>
+</article>
+
+<footer class="site-footer">
+    <div class="container">
+        <nav>
+            <a href="http://devblog.dwarvesf.com/">Dwarves Foundation</a> &middot;
+            <a href="/">Blog</a> &middot;
+            
+            <a href="http://dwarvesf.com/">About</a>
+        </nav>
+        
+        <nav class="social">
+            
+            <a href="https://twitter.com/dwarvesf" title="Follow on Twitter" target="_blank"><i class="icon icon-twitter black"></i></a>
+            
+            
+            <a href="https://github.com/dwarvesf" title="Follow on Github" target="_blank"><i class="icon icon-github black"></i></a>
+            
+            
+            <a href="http://facebook.com/dwarvesf" title="Follow on Facebook" target="_blank"><i class="icon icon-facebook black"></i></a>
+                
+            <a href="/index.xml" title="RSS Feed">
+                <i class="icon icon-rss black"></i>
+            </a>
+        </nav>
+    </div>
+</footer>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<div id="fb-root"></div>
+
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=1526296360976332";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>
+    (function(d, t) {
+        var g = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        g.src = '//hnbutton.appspot.com/static/hn.min.js';
+        s.parentNode.insertBefore(g, s);
+    }(document, 'script'));
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58452796-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+  
+
+<script data-no-instant>document.write('<script src="http://'
+        + (location.host || 'localhost').split(':')[0]
+		+ ':1313/livereload.js?mindelay=10"></'
+        + 'script>')</script></body>
+</html>
+
