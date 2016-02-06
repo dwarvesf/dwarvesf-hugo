@@ -2,7 +2,7 @@
 
 title: Docker với Microcontainers
 draft: false
-description: "Containers are awesome. Microcontainers are awesomer."
+description: "Containers are awesome. Microcontainers are awesome."
 date: "2016-02-04T12:00:25+07:00"
 categories: docker, go
 
