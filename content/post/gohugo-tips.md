@@ -8,7 +8,7 @@ categories: intro, go, hugo
 
 coverimage: 2015-01-25-hugo-cover.png
 
-excerpt: "Tiếp theo bài trước, sau khi đã cấu hình và deploy thư mục `source/` chứa các file `.md` và thư mục `public/` chứa html tĩnh đã được dịch ra thì Github của tui sẽ như sau:"
+excerpt: "Tiếp theo bài trước, sau khi đã cấu hình và deploy thư mục `source/` chứa các file `.md` và thư mục `release/` chứa html tĩnh đã được dịch ra thì Github của tui sẽ như sau:"
 
 authorname: Tiểu Bảo
 authorlink: http://tieubao.me
@@ -19,7 +19,7 @@ authorimage: gancho.png
 
 ---
 
-Tiếp theo bài trước, sau khi đã cấu hình và deploy thư mục `source/` chứa các file `.md` và thư mục `public/` chứa html tĩnh đã được dịch ra thì Github của tui sẽ như sau:
+Tiếp theo bài trước, sau khi đã cấu hình và deploy thư mục `source/` chứa các file `.md` và thư mục `release/` chứa html tĩnh đã được dịch ra thì Github của tui sẽ như sau:
 
 {{% img src="/images/2015-01-27-github-dwarves.png" class="third right" %}}
 
@@ -32,14 +32,14 @@ Sau khi được cấp phát quyền truy cập vào đó, với vai trò là m�
 ```
 $ git clone git@github.com:dwarvesf/dwarvesf-hugo.git
 $ cd dwarvesf-hugo
-$ git clone --recursive git@github.com:dwarvesf/dwarvesf.github.io.git public/
+$ git clone --recursive git@github.com:dwarvesf/dwarvesf.github.io.git release/
 ```
 
 Dùng `git remote` để kiểm tra xem các folder còn trỏ đúng vào các repo hay không:
 
 ```
 $ git remote -v
-$ cd public | git remote -v
+$ cd release | git remote -v
 ```
 
 {{% img src="/images/2015-01-27-git-remote.png" class="third right" %}}
