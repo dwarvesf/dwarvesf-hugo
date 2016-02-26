@@ -13,25 +13,24 @@ excerpt: " Crawl là một vấn đề hay gặp trong quá trình làm software
 
 authorname: Lê Ngọc Thạch
 authorlink: https://www.facebook.com/lnthach
-authortwitter: 
+authortwitter: runivn
 authorgithub: RuniVN
-authorbio: Fullstack 
-authorimage: inhel.png
+authorbio: Fullstack
+authorimage: chao.png
 
 ---
 
 ## Crawl dữ liệu
-Crawl là một vấn đề hay gặp trong quá trình làm software. Ví dụ lấy tin tức, tin giảm giá, vé xem phim... là những dạng của crawl. Một cách khá đơn giản đó là phân tích HTML, đọc các thẻ và rút trích dữ liệu. Thư viện trên Go mình hay dùng đó là [goquery](https://github.com/PuerkitoBio/goquery). 
+Crawl là một vấn đề hay gặp trong quá trình làm software. Ví dụ lấy tin tức, tin giảm giá, vé xem phim... là những dạng của crawl. Một cách khá đơn giản đó là phân tích HTML, đọc các thẻ và rút trích dữ liệu. Thư viện trên Go mình hay dùng đó là [goquery](https://github.com/PuerkitoBio/goquery).
 
 Tuy nhiên việc crawl một trang bằng đọc HTML thuần sẽ không work được trong một số trường hợp như: dữ liệu được load bằng ajax(lúc đọc HTML sẽ chỉ thấy wrapper chứ không thấy dữ liệu) hay muốn vào được trang cần crawl thì phải qua bước login,...
 
 Trong bài này mình sẽ lấy một ví dụ, mình muốn crawl lấy những giảm giá của amazon: [amazon deal](http://www.amazon.com/gp/goldbox/all-deals/ref=gbps_ftr_s-3_3022_wht_541966?ie=UTF8&*Version*=1&*entries*=0&gb_f_GB-SUPPLE=sortOrder:BY_SCORE,enforcedCategories:3760911%252C2335752011%252C541966&pf_rd_p=2292853022&pf_rd_s=slot-3&pf_rd_t=701&pf_rd_i=gb_all&pf_rd_m=ATVPDKIKX0DER&pf_rd_r=14CQSB5TF4GTC2RNHDAG)
-
 Trang này javasript sẽ gọi ajax lấy dữ liệu và sau đó mới đổ vào cây DOM. Khi dùng goquery đọc HTML thì sẽ không thấy được các thẻ div như khi inspect element.
 
 Với những loại như thế này, mình sử dụng selenium để chạy web trên browser thật, thực hiện thao tác để được trang HTML fully load rồi mới trích xuất dữ liệu.
 
-Selenium chạy trên nền JVM, khá nổi tiếng trong lĩnh vực automation test. Nó cho phép mình chạy script test trên browser thật. 
+Selenium chạy trên nền JVM, khá nổi tiếng trong lĩnh vực automation test. Nó cho phép mình chạy script test trên browser thật.
 Cách làm của mình sẽ là: Dùng selenium chạy trang amazon lên, đợi javascript load xong và sau đó crawl dữ liệu bình thường.
 
 ## Cách cài đặt
@@ -70,7 +69,7 @@ func main() {
 		return
 	}
 	defer webDriver.Quit()
-	
+
 	err = webDriver.Get(URL_AMAZON_DEAL)
 	if err != nil {
 		fmt.Printf("Failed to load page: %s\n", err)
@@ -92,7 +91,7 @@ func main() {
 		fmt.Printf("Failed to find element: %s\n", err)
 		return
 	}
-    
+
 	var firstElem selenium.WebElement
 	firstElem, err = elem.FindElement(selenium.ByCSSSelector, ".a-section .dealContainer")
 	if err != nil {
@@ -105,21 +104,24 @@ func main() {
 		img, _ := image.GetAttribute("src")
 		fmt.Println(img)
 	}
-}  
+}
 ```
-Chạy code lên chúng ta được 
+Chạy code lên chúng ta được
 
-```Page title: Gold Box Deals | Today's Deals - Amazon.com
-   https://images-na.ssl-images-amazon.com/images/I/51eU5JrGAXL._AA210_.jpg```
+```
+    Page title: Gold Box Deals | Today's Deals - Amazon.com
+
+    https://images-na.ssl-images-amazon.com/images/I/51eU5JrGAXL._AA210_.jpg
+```
 
 Như vậy chúng ta đã lấy được thông tin cần lấy.
-	
+
 
 ## Kết luận
 Trên đây là những gì mình tìm hiểu được khi gặp vấn đề về crawl trong quá trình software development, ở đây là ngôn ngữ Go.
-Selenium có thể giúp chúng ta trong nhiều trường hợp khác, ví dụ những trang web cần đăng nhập, các trang web có captcha... 
+Selenium có thể giúp chúng ta trong nhiều trường hợp khác, ví dụ những trang web cần đăng nhập, các trang web có captcha...
 Nếu ai có kinh nghiệm gì khác, mong các bạn đóng góp thêm.
-     
+
 
 
 

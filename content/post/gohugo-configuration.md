@@ -41,7 +41,7 @@ Ví dụ file cấu hình của tui:
 ---
 
 baseurl:            http://blog.dwarvesf.com/
-pygmentsuseclasses: true 
+pygmentsuseclasses: true
 theme:              hugo-incorporated
 
 params:
@@ -58,7 +58,7 @@ params:
 
 Hugo cung cấp một cơ chế load theme khá tiện lợi. Các theme được phát triển bởi nhiều lập trình viên khác nhau và tạo một pull request tới repository [spf13/hugoThemes](https://github.com/spf13/hugoThemes).
 
-Để install một theme, bạn chỉ cần clone repo mong muốn hoặc toàn bộ repo vào thư mục `themes`. 
+Để install một theme, bạn chỉ cần clone repo mong muốn hoặc toàn bộ repo vào thư mục `themes`.
 
 ```
 $ git clone --recursive https://github.com/spf13/hugoThemes themes
@@ -76,7 +76,7 @@ Cấu trúc của một thư mục chứa theme khá đơn giản và hoàn toà
 
 Tùy loại theme mà các file cấu hình sẽ khác nhau về số lượng giá trị cần cấu hình cũng như tên gọi.
 
-``` 
+```
 # File cấu hình theme herring-cove
 
 name = "Herring Cove"
@@ -95,12 +95,12 @@ tags = ["blog", "company"]
 
 ```
 
-``` 
+```
 # File cấu hình theme hugo-incorperated
 ---
 
 baseurl:            http://blog.nilproductions.com/
-pygmentsuseclasses: true 
+pygmentsuseclasses: true
 theme:              hugo-incorporated
 
 params:
@@ -112,9 +112,9 @@ params:
     logo:         logo.png
 
     # Company information
-    company:      nil productions 
+    company:      nil productions
     url:          http://nilproductions.com/
-    facebook:     
+    facebook:
     github:       nilproductions
     twitter:      nw_iw
     gplus:        ''
@@ -136,13 +136,13 @@ params:
       gplus:      false
       hn:         true
 
-    # Analytics     
+    # Analytics
     analytics:
       google: false # Add tracking code in _includes/_google-analytics.html
 
     # Google Fonts
     google_font: 'Droid+Sans:400,700'
-    
+
     # Setup your fonts, colors etc at _assets/stylesheets/main.scss
 ```
 
@@ -160,9 +160,9 @@ Sau khi chạy câu lệnh `hugo server`, Hugo sẽ generate folder `public/` đ
 
 - Custom lại một theme đã có sẵn bằng cách edit trực tiếp vào folder `themes/` hoặc tạo thêm các file nằm rời để override các giá trị mặc định
 - Tự một theme mới luôn cho oách http://gohugo.io/themes/creation/
-- Đưa folder `public/` lên trên một host nào đó mà các bạn có, như vậy là xong. Bạn có thể tự dựng Raspi, xin một host free nào đó rồi upload lên .v..v. Còn tui thì tui lựa chọn [Github Pages](https://pages.github.com), một tính năng khá đỉnh của Github. 
+- Đưa folder `public/` lên trên một host nào đó mà các bạn có, như vậy là xong. Bạn có thể tự dựng Raspi, xin một host free nào đó rồi upload lên .v..v. Còn tui thì tui lựa chọn [Github Pages](https://pages.github.com), một tính năng khá đỉnh của Github.
 
-Với mỗi account đăng kí, Github sẽ chọn một repo riêng (bạn phải tự tạo) với tên repo có dạng `username.github.io`, mặc định branch `master` để làm một site từ các html tĩnh. Bạn có thể tham khảo source code của site Dwarves Foundation hiện tại ở: https://github.com/dwarvesf/dwarvesf.github.io. Hoặc một số site khác đỉnh hơn mà tui sực nhớ: 
+Với mỗi account đăng kí, Github sẽ chọn một repo riêng (bạn phải tự tạo) với tên repo có dạng `username.github.io`, mặc định branch `master` để làm một site từ các html tĩnh. Bạn có thể tham khảo source code của site Dwarves Foundation hiện tại ở: https://github.com/dwarvesf/dwarvesf.github.io. Hoặc một số site khác đỉnh hơn mà tui sực nhớ:
 
 - Square: https://github.com/square/square.github.io
 - Blog cá nhân của tui: https://github.com/tieubao/tieubao.github.io
@@ -184,10 +184,10 @@ Rồi, bắt đầu đưa site lên thôi. Các bạn thực hiện các bước
 
 echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
 
-# Build the project. 
+# Build the project.
 hugo -d release # if using a theme, replace by `hugo -t <yourtheme>`
 
-# Go To Public folder
+# Go To release folder
 cd release
 
 # Add changes to git.
@@ -207,7 +207,7 @@ git push origin master
 cd ..
 ```
 
-Các bạn chỉ cần vác thằng mày về, change mode +x cho nó `chmod +x deploy.sh`. Những lần sau khi muốn deploy blog lên Github, bạn chỉ cd vào thư mục chứa site của mình, rồi chạy: 
+Các bạn chỉ cần vác thằng mày về, change mode +x cho nó `chmod +x deploy.sh`. Những lần sau khi muốn deploy blog lên Github, bạn chỉ cd vào thư mục chứa site của mình, rồi chạy:
 
 ```
 $ ./deploy.sh "<message>"
