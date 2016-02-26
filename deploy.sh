@@ -2,7 +2,7 @@
 
 echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
 
-# Build the project. 
+# Build the project.
 hugo -d release # if using a theme, replace by `hugo -t <yourtheme>`
 
 # Go To Public folder
@@ -18,7 +18,7 @@ fi
 git commit -m "$msg"
 
 # Push source and build repos.
-git push origin master
+git push -f origin master
 
 # Come Back
 cd ..
