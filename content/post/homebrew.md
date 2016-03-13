@@ -77,7 +77,7 @@ So in short, if you want to contribute a new one, you need to create a new formu
 
 {{% img src="/images/2016-03-13-homebrew-fork.png" class="third right" %}}
 
-For us, we will help a repo called `dwarvesf/homebrew` which we can clone and start from there.
+For us, we will have a repo called `dwarvesf/homebrew` which we can clone and start from there.
 
 ### Create new formula
 
