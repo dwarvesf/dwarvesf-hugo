@@ -12,9 +12,9 @@ excerpt: "The Tontatta Kingdom is a kingdom underneath Green Bit, and home to th
 
 authorname: Tiểu Bảo
 authorlink: http://tieubao.me
-authortwitter: mrcexii
+authortwitter: nntruonghan
 authorgithub: tieubao
-authorbio: Tonta-Chief
+authorbio: Brother of all Miners
 authorimage: gancho.png
 
 ---
