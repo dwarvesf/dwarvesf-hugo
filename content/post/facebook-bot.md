@@ -1,7 +1,7 @@
 ---
 
 title: "Viết một facebook messenger bot đơn giản cùng Go + ngrok"
-date: "2016-06-08T13:09:56+07:00"
+date: "2016-07-08T13:09:56+07:00"
 draft: false
 
 description: "Viết một facebook messenger bot đơn giản cùng Go + ngrok"
