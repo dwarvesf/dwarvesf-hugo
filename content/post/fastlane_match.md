@@ -1,7 +1,7 @@
 ---
 
 title: Fastlane - Hướng dẫn sử dụng Match
-draft: true
+draft: false
 description: "Match - Đồng bộ certificates và profiles trong nhóm bằng git"
 date: "2016-07-24T15:14:53+07:00"
 categories: tutorial, ios, fastlane, match
