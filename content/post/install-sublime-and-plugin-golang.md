@@ -6,7 +6,7 @@ description: "Sublime text và plugins hỗ trợ code Golang."
 date: "2015-08-11T13:50:47+07:00"
 categories: intro, go, sublime
 
-coverimage: 2015-02-05-revel-installation-banner.png
+coverimage: 2015-01-11-gopher-cover-2.jpg
 
 excerpt: "Sublime Text là một editor, được hỗ trợ syntax cho nhiều ngôn ngữ java, html, css, python, … có khá nhiều plugin phong phú và đa dạng để hỗ trợ cho việc code dễ dàng và nhanh hơn. Hôm nay tui sẽ hướng dẫn các bạn cài đặt sublime text cũng như các plugin hỗ trợ việc code Golang."
 
@@ -45,7 +45,7 @@ http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%20Build%203083.dmg
 - Sau khi cài đặt xong, chúng ta sẽ cài thêm các plugin như sau:
 	1. Chạy sublime text.
 	2. Cài đặt Package Control. Sử dụng tổ hợp phím Ctrl + `
-	{{% img src="/images/post/2015-08-11/Screen Shot 2015-08-10 at 10.41.43 PM.png" class="third right" %}}
+	{{% img src="/images/Screen Shot 2015-08-10 at 10.41.43 PM.png" class="third right" %}}
 	
 	Nếu là sublime 3, chúng ta paste code này:
 	
@@ -60,11 +60,11 @@ http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%20Build%203083.dmg
 	https://packagecontrol.io/installation
 
 	- Sau khi cài đặt Package Control, chúng ta có thể vào:
-	{{% img src="/images/post/2015-08-11/Screen Shot 2015-08-10 at 10.44.49 PM.png" class="third right" %}}
+	{{% img src="/images/Screen Shot 2015-08-10 at 10.44.49 PM.png" class="third right" %}}
 
 	- Chọn Package Control.
 
-	{{% img src="/images/post/2015-08-11/Screen Shot 2015-08-10 at 10.47.55 PM.png" class="third right" %}}
+	{{% img src="/images/Screen Shot 2015-08-10 at 10.47.55 PM.png" class="third right" %}}
 
 	- Chọn install package và search các package cần thiết và install.
 
@@ -92,7 +92,7 @@ http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%20Build%203083.dmg
 		Các bạn có thể vào phần List Packages để kiểm tra các package đã được cài.
 
 		Sau khi cài đặt GoSublime, ta tiến hành config như sau:
-		{{% img src="/images/post/2015-08-11/Screen Shot 2015-08-10 at 11.10.35 PM.png" class="third right" %}}
+		{{% img src="/images/Screen Shot 2015-08-10 at 11.10.35 PM.png" class="third right" %}}
 
 		Vào phần Setting – User, và copy đoạn này vào: 
 
@@ -112,7 +112,7 @@ http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%20Build%203083.dmg
 
 	- Sau đó, kiểm tra “code completion” của GoSublime bằng cách type fmt lần nữa, nếu hiện như hình sau, thì bạn đã cài plugin GoSublime thành công.
 
-	{{% img src="/images/post/2015-08-11/Screen Shot 2015-08-10 at 11.16.18 PM.png" class="third right" %}}
+	{{% img src="/images/Screen Shot 2015-08-10 at 11.16.18 PM.png" class="third right" %}}
 	
 - Chúc các bạn cài đặt thành công và cải thiện được tốc độ code nhanh hơn với 2 plugin trên :).
 
