@@ -2353,10 +2353,22 @@ article {
     margin: 1.2em -4em 1.2em 0;
     padding: 0; }
     article blockquote p {
-      font-size: 30px;
+      font-size: 21px;
       line-height: 1.1;
-      color: #2077b2;
-      font-weight: 600; }
+      font-weight: 600;
+      border-left: 3px solid rgba(0,0,0,.8);
+      padding-left: 20px;
+      margin-left: -23px;
+      padding-bottom: 2px;
+      --x-height-multiplier: 0.35;
+      --baseline-multiplier: 0.179;
+      font-family: medium-content-serif-font,Georgia,Cambria,"Times New Roman",Times,serif;
+      letter-spacing: .01rem;
+      font-weight: 400;
+      font-style: italic;
+      font-size: 21px;
+      line-height: 1.58;
+      letter-spacing: -.003em; }
   article h1 {
     font-weight: 600;
     font-size: 2.1em;
@@ -2819,5 +2831,5 @@ article {
 
 
 .fb-like.fb_iframe_widget span {
-  vertical-align: top !important; 
+  vertical-align: top !important;
 }
